@@ -7,7 +7,7 @@ namespace BrassLoon.DataClient
         private System.Data.IDbTransaction _innerTransaction;
         private List<IDbTransactionObserver> _observers = new List<IDbTransactionObserver>();
 
-        public DbTransaction(IDbTransaction transaction)
+        public DbTransaction(System.Data.IDbTransaction transaction)
         {
             _innerTransaction = transaction;
         }

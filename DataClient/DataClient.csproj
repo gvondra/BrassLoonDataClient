@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>BrassLoon.DataClient</AssemblyName>
+    <RootNameSpace>BrassLoon.DataClient</RootNameSpace>
+    <Authors>Greg Vondra</Authors>
+    <Company/>
+    <Product>Brass Loon</Product>
+    <Description>Generic DBMS Interface</Description>
+    <PackageLicenseExpression>GNU General Public License v3.0</PackageLicenseExpression>
+    <Version>0.0.0-prerelease</Version>
+    <PackageReleaseNotes/>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0"/>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0"/>
+  </ItemGroup>
+</Project>
