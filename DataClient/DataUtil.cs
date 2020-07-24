@@ -19,6 +19,18 @@ namespace BrassLoon.DataClient
             return parameter;
         }
 
+        public static IDataParameter CreateParameter(
+            IDbProviderFactory providerFactory,
+            string name,
+            DbType dbType,
+            object value
+        )
+        {
+            IDataParameter parameter = CreateParameter(providerFactory, name, dbType);
+            parameter.Value = value;
+            return parameter;
+        }
+
         public static object GetParameterValue(Guid? value)
         {
             if (value.HasValue && !value.Value.Equals(Guid.Empty))
@@ -120,7 +132,7 @@ namespace BrassLoon.DataClient
                 return DBNull.Value;
         }
 
-        private static object GetParameterValueString(bool? value, string trueResponse = "Y", string falseResponse = "N")
+        public static object GetParameterValueString(bool? value, string trueResponse = "Y", string falseResponse = "N")
         {
             if (value.HasValue)
             {
@@ -141,9 +153,7 @@ namespace BrassLoon.DataClient
             object value
         ) 
         {
-            IDataParameter parameter = CreateParameter(providerFactory, name, dbType);
-            parameter.Value = value;
-            parameterCollection.Add(parameter);
+            parameterCollection.Add(CreateParameter(providerFactory, name, dbType, value));
         }
 
         public static void AssignDataStateManager(IEnumerable<IDataManagedState> data)
