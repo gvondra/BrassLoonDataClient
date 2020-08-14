@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient
 {
     /// Extending the ISettings interface, this interface 
@@ -6,6 +8,6 @@ namespace BrassLoon.DataClient
     /// Azure SQL databases that require an access token.
     public interface ISqlSettings : ISettings 
     {
-        Func<string> GetAccessToken { get; }
+        Func<Task<string>> GetAccessToken { get; }
     }
 }

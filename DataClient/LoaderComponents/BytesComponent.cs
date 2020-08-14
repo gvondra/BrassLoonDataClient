@@ -1,14 +1,15 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
     public class BytesComponent : ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
+            byte[] result = null;
+            if (!await reader.IsDBNullAsync(ordinal))
             {                
-                result = (byte[])reader.GetValue(ordinal);
+                result = await reader.GetFieldValueAsync<byte[]>(ordinal);
             }
             return result;
         }

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient
 {
     public class Loader : ILoader
@@ -19,7 +22,7 @@ namespace BrassLoon.DataClient
         public List<ILoaderComponent> Components { get; set; }
 
         /// data is the model that values will be assigned to
-        public object Load(object data, IDataReader reader)
+        public async Task<object> Load(object data, DbDataReader reader)
         {
             IEnumerable<ColumnMapping> columnMappings = GetColumnMappings(data);
             int ordinal;
@@ -35,27 +38,23 @@ namespace BrassLoon.DataClient
                 }
                 if (ordinal >= 0)
                 {
-                    columnMapping.SetValue(data, GetValue(reader, ordinal, columnMapping));
+                    columnMapping.SetValue(data, await GetValue(reader, ordinal, columnMapping));
                 }
             }
             return data;
         }
 
-        private object GetValue(IDataReader reader, int ordinal, ColumnMapping columnMapping)
+        private async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
         {
             bool found = false;
-            IEnumerator<ILoaderComponent> enumerator;
             object value = null;
             if (Components != null)
             {
-                enumerator = Components.GetEnumerator();
-                while (!found && enumerator.MoveNext())
+                ILoaderComponent loaderComponent = Components.FirstOrDefault(c => c.IsApplicable(columnMapping));
+                if (loaderComponent != null)
                 {
-                    if (enumerator.Current.IsApplicable(columnMapping))
-                    {
-                        found = true;
-                        value = enumerator.Current.GetValue(reader, ordinal);
-                    }
+                    value = await loaderComponent.GetValue(reader, ordinal);
+                    found = true;
                 }
             }
             if (!found)

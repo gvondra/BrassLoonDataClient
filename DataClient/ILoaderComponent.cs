@@ -1,9 +1,11 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient
 {
     public interface ILoaderComponent 
     {
         bool IsApplicable(ColumnMapping mapping);
-        object GetValue(IDataReader reader, int ordinal);
+        Task<object> GetValue(DbDataReader reader, int ordinal);
     }
 }

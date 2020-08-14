@@ -1,21 +1,12 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
-    public class DoubleComponent : ILoaderComponent
+    public class DoubleComponent : PrimativeLoaderComponent<double>, ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
-            {                
-                result = reader.GetDouble(ordinal);
-            }
-            return result;
-        }
-
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(double)) || mapping.Info.PropertyType.Equals(typeof(double?));
+            return await base.GetFieldValue(reader, ordinal);
         }
     }
 }

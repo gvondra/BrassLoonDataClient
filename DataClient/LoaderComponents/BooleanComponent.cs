@@ -1,28 +1,12 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
-    public class BooleanComponent : ILoaderComponent
+    public class BooleanComponent : PrimativeLoaderComponent<bool>, ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
-            {
-                if (reader.GetFieldType(ordinal) == typeof(string))
-                {
-                    string valueString = reader.GetString(ordinal).Trim();
-                    if (!string.IsNullOrEmpty(valueString))
-                        result = valueString.ToUpper().StartsWith("Y");
-                }
-                else
-                    result = reader.GetBoolean(ordinal);
-            }
-            return result;
-        }
-
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(bool)) || mapping.Info.PropertyType.Equals(typeof(bool?));
+            return await base.GetFieldValue(reader, ordinal);
         }
     }
 }

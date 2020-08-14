@@ -1,21 +1,12 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
-    public class DecimalComponent : ILoaderComponent
+    public class DecimalComponent : PrimativeLoaderComponent<decimal>, ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
-            {                
-                result = reader.GetDecimal(ordinal);
-            }
-            return result;
-        }
-
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(decimal)) || mapping.Info.PropertyType.Equals(typeof(decimal?));
+            return await base.GetFieldValue(reader, ordinal);
         }
     }
 }

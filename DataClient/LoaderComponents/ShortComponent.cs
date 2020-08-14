@@ -1,21 +1,12 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
-    public class ShortComponent : ILoaderComponent
+    public class ShortComponent : PrimativeLoaderComponent<short>, ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
-            {                
-                result = reader.GetInt16(ordinal);
-            }
-            return result;
-        }
-
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(short)) || mapping.Info.PropertyType.Equals(typeof(short?));
+            return await base.GetFieldValue(reader, ordinal);
         }
     }
 }

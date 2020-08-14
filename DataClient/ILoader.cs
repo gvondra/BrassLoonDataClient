@@ -1,8 +1,10 @@
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient
 {
     public interface ILoader 
     {
-        object Load(object data, IDataReader reader);
+        Task<object> Load(object data, DbDataReader reader);
     }
 }

@@ -1,10 +1,13 @@
 using System;
 using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient 
 {
     public interface ISqlDbProviderFactory : IDbProviderFactory
     {
-        IDbConnection OpenConnection(string connectionString, Func<string> getAccessToken);
-        IDbConnection OpenConnection(ISqlSettings settings);
+        Task<DbConnection> OpenConnection(string connectionString, Func<Task<string>> getAccessToken);
+        Task<DbConnection> OpenConnection(ISqlSettings settings);
     }
 }

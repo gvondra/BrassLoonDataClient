@@ -4,15 +4,15 @@ namespace BrassLoon.DataClient
 {
     public class DbTransaction : IDbTransaction
     {
-        private System.Data.IDbTransaction _innerTransaction;
+        private System.Data.Common.DbTransaction _innerTransaction;
         private List<IDbTransactionObserver> _observers = new List<IDbTransactionObserver>();
 
-        public DbTransaction(System.Data.IDbTransaction transaction)
+        public DbTransaction(System.Data.Common.DbTransaction transaction)
         {
             _innerTransaction = transaction;
         }
 
-        public System.Data.IDbTransaction InnerTransaction => _innerTransaction;
+        public System.Data.Common.DbTransaction InnerTransaction => _innerTransaction;
         public IDbConnection Connection => _innerTransaction.Connection;
         public IsolationLevel IsolationLevel => _innerTransaction.IsolationLevel;
 

@@ -1,22 +1,13 @@
 using System;
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
-    public class DateComponent : ILoaderComponent
+    public class DateComponent : PrimativeLoaderComponent<DateTime>, ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
-            {                
-                result = reader.GetDateTime(ordinal);
-            }
-            return result;
-        }
-
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(DateTime)) || mapping.Info.PropertyType.Equals(typeof(DateTime?));
+            return await base.GetFieldValue(reader, ordinal);
         }
     }
 }

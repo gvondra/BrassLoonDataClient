@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Text;
 
 namespace DataClientTest
@@ -21,7 +22,7 @@ namespace DataClientTest
             LoaderFactory loaderFactory = new LoaderFactory();
             ILoader loader = loaderFactory.CreateLoader();
             Assert.IsInstanceOfType(loader, typeof(Loader));
-            using (IDataReader reader = CreateReader())
+            using (DbDataReader reader = CreateReader())
             {
                 Assert.IsTrue(reader.Read());
                 loader.Load(model, reader);
@@ -32,7 +33,7 @@ namespace DataClientTest
             Assert.AreEqual(TEST_TIMESTAMP, model.Timestamp);
         }
 
-        private IDataReader CreateReader()
+        private DbDataReader CreateReader()
         {
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("Id", typeof(int));

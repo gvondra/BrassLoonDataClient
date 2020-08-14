@@ -1,22 +1,13 @@
 using System;
-using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 namespace BrassLoon.DataClient.LoaderComponents
 {
-    public class TimespanComponent : ILoaderComponent
+    public class TimespanComponent : PrimativeLoaderComponent<TimeSpan>, ILoaderComponent
     {
-        public object GetValue(IDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal)
         {
-            object result = null;
-            if (!reader.IsDBNull(ordinal))
-            {                
-                result = (TimeSpan)reader.GetValue(ordinal);
-            }
-            return result;
-        }
-
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(TimeSpan)) || mapping.Info.PropertyType.Equals(typeof(TimeSpan?));
+            return await base.GetFieldValue(reader, ordinal);
         }
     }
 }

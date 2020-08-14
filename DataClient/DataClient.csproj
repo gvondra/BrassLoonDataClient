@@ -4,19 +4,20 @@
     <AssemblyName>BrassLoon.DataClient</AssemblyName>
     <RootNameSpace>BrassLoon.DataClient</RootNameSpace>
     <Authors>Greg Vondra</Authors>
-    <Company/>
+    <Company />
     <Product>Brass Loon</Product>
     <Description>Generic DBMS Interface</Description>
-    <PackageLicenseExpression>GNU General Public License v3.0</PackageLicenseExpression>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <Version>0.0.0-prerelease</Version>
-    <PackageReleaseNotes/>
+    <PackageReleaseNotes />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.2.0"/>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0"/>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0" />
   </ItemGroup>
 </Project>

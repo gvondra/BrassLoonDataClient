@@ -1,15 +1,18 @@
 using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient
 {
     public class LastInsertRowId 
     {
-        public long GetLastInsertRowId(IDbConnection connection)
+        public async Task<T> GetLastInsertRowId<T>(DbConnection connection) where T : struct
         {
-            using (IDbCommand command = connection.CreateCommand())
+            using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
                 command.CommandText = "Select last_insert_rowid();";
-                return (long)command.ExecuteScalar();
+                return (T)(await command.ExecuteScalarAsync());
             }
         }
     }
