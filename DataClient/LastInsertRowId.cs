@@ -11,9 +11,9 @@ namespace BrassLoon.DataClient
             using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandType = CommandType.Text;
-                command.CommandText = "Select last_insert_rowid();";
+                command.CommandText = "Select SCOPE_IDENTITY();";
                 return (T)(await command.ExecuteScalarAsync());
             }
         }
-    }
+    }   
 }
