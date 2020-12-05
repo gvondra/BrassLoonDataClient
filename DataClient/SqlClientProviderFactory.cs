@@ -25,7 +25,7 @@ namespace BrassLoon.DataClient
 
         public async Task<DbConnection> OpenConnection(ISqlSettings settings)
         {
-            return await this.OpenConnection(settings.ConnectionString, settings.GetAccessToken);
+            return await this.OpenConnection(await settings.GetConnectionString(), settings.GetAccessToken);
         }
 
         private async Task SetAccessToken(DbConnection connection, Func<Task<string>> getAccessToken)
@@ -43,7 +43,7 @@ namespace BrassLoon.DataClient
             if (typeof(ISqlSettings).IsAssignableFrom(settings.GetType()))
                 return await this.OpenConnection((ISqlSettings)settings);
             else 
-                return await base.OpenConnection(settings.ConnectionString);
+                return await base.OpenConnection(await settings.GetConnectionString());
         }
     }
 }

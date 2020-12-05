@@ -54,7 +54,7 @@ namespace BrassLoon.DataClient
 
         public virtual async Task<DbConnection> OpenConnection(ISettings settings)
         {
-            return await OpenConnection(settings.ConnectionString);
+            return await OpenConnection(await settings.GetConnectionString());
         }
 
         public virtual async Task<DbConnection> OpenConnection(string connectionString)
