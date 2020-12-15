@@ -5,9 +5,12 @@ namespace BrassLoon.DataClient.LoaderComponents
 {
     public class DateComponent : PrimativeLoaderComponent<DateTime>, ILoaderComponent
     {
-        public async Task<object> GetValue(DbDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
         {
-            return await base.GetFieldValue(reader, ordinal);
+            DateTime? result = await base.GetFieldValue(reader, ordinal);
+            if (columnMapping.MappingAttribute.IsUtc && result.HasValue)
+                result = DateTime.SpecifyKind(result.Value, DateTimeKind.Utc);
+            return result;
         }
     }
 }

@@ -53,7 +53,7 @@ namespace BrassLoon.DataClient
                 ILoaderComponent loaderComponent = Components.FirstOrDefault(c => c.IsApplicable(columnMapping));
                 if (loaderComponent != null)
                 {
-                    value = await loaderComponent.GetValue(reader, ordinal);
+                    value = await loaderComponent.GetValue(reader, ordinal, columnMapping);
                     found = true;
                 }
             }

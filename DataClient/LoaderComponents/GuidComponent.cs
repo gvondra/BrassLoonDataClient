@@ -5,7 +5,7 @@ namespace BrassLoon.DataClient.LoaderComponents
 {
     public class GuidComponent : PrimativeLoaderComponent<Guid>, ILoaderComponent
     {
-        public async Task<object> GetValue(DbDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
         {
             object result = null;
             if (!await reader.IsDBNullAsync(ordinal))

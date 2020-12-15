@@ -4,7 +4,7 @@ namespace BrassLoon.DataClient.LoaderComponents
 {
     public class BytesComponent : ILoaderComponent
     {
-        public async Task<object> GetValue(DbDataReader reader, int ordinal)
+        public async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
         {
             byte[] result = null;
             if (!await reader.IsDBNullAsync(ordinal))

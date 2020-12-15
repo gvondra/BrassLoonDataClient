@@ -6,6 +6,6 @@ namespace BrassLoon.DataClient
     public interface ILoaderComponent 
     {
         bool IsApplicable(ColumnMapping mapping);
-        Task<object> GetValue(DbDataReader reader, int ordinal);
+        Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping);
     }
 }
