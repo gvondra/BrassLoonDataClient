@@ -8,7 +8,7 @@
     <Product>Brass Loon</Product>
     <Description>Generic DBMS Interface</Description>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <Version>1.0.0-prerelease.2</Version>
+    <Version>1.0.0-prerelease.3</Version>
     <PackageReleaseNotes />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
