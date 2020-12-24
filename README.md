@@ -6,6 +6,8 @@ The component targets .Net Standard.
 
 ## Usage
 
+The component is distributed via [nuget](https://www.nuget.org/packages/BrassLoon.DataClient/).
+
 ### ISettings Interface
 
 Everything the data client does relies on the ISettings interface.  Users must implement this interface so the data client can get a database connection string.
