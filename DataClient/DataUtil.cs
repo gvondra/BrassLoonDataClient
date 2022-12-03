@@ -183,15 +183,14 @@ namespace BrassLoon.DataClient
         /// <param name="storedProcedureName">name of stored proc. to execute</param>
         /// <param name="dataParameters">data parameters passed to the stroed proc.</param>
         /// <returns>List of values from the executed stored proc.</returns>
-        public async static Task<IEnumerable<T?>> ReadList<T>(
+        public async static Task<IEnumerable<T>> ReadList<T>(
             IDbProviderFactory providerFactory,
             ISettings settings,
             string storedProcedureName,
             params IDataParameter[] dataParameters
             )
-            where T : struct
         {
-            List<T?> items = new List<T?>();
+            List<T> items = new List<T>();
             using (DbConnection connection = await providerFactory.OpenConnection(settings))
             {
                 using (DbCommand command = connection.CreateCommand())
@@ -210,7 +209,7 @@ namespace BrassLoon.DataClient
                         while (await reader.ReadAsync())
                         {
                             if (await reader.IsDBNullAsync(0))
-                                items.Add(null);
+                                items.Add(default(T));
                             else
                                 items.Add(await reader.GetFieldValueAsync<T>(0));
                         }
