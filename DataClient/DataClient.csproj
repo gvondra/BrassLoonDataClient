@@ -12,6 +12,7 @@
     <AssemblyVersion>2.1.0.2</AssemblyVersion>
     <PackageReleaseNotes>-2.1 Added utility method DataUtil.ReadList; Mapping attribute ColumnName is optional; Added DataReaderProcess</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -23,6 +24,13 @@
 		<DebugType>full</DebugType>
 		<Optimize>False</Optimize>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 	
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="[5.0.1,6)" />
