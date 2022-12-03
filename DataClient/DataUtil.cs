@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
+using System.Threading.Tasks;
 using System.Xml;
 namespace BrassLoon.DataClient 
 {
@@ -11,6 +13,7 @@ namespace BrassLoon.DataClient
         {
             return CreateParameter(providerFactory, null, type);
         }
+
         public static IDataParameter CreateParameter(IDbProviderFactory providerFactory, string name, DbType type)
         {
             IDataParameter parameter = providerFactory.CreateParameter();
@@ -39,6 +42,13 @@ namespace BrassLoon.DataClient
                 return DBNull.Value;
         }
 
+        /// <summary>
+        /// If value is null, then returns an empty string or DBNull depending upon the value of treatNullAsEmpty.
+        /// If value is not null, then value is returned with white space trimmed from the end.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="treatNullAsEmpty">Directs how null values are handled</param>
+        /// <returns></returns>
         public static object GetParameterValue(string value, bool treatNullAsEmpty = true)
         {
             if (value == null)
@@ -162,6 +172,52 @@ namespace BrassLoon.DataClient
             {
                 state.Manager = new DataStateManager(state.Clone());
             }
+        }
+
+        /// <summary>
+        /// Executes the named stored proc. The resultant data set is read, and the first field stored to list.
+        /// </summary>
+        /// <typeparam name="T">Type of resultant list and target field</typeparam>
+        /// <param name="providerFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="storedProcedureName">name of stored proc. to execute</param>
+        /// <param name="dataParameters">data parameters passed to the stroed proc.</param>
+        /// <returns>List of values from the executed stored proc.</returns>
+        public async static Task<IEnumerable<T?>> ReadList<T>(
+            IDbProviderFactory providerFactory,
+            ISettings settings,
+            string storedProcedureName,
+            params IDataParameter[] dataParameters
+            )
+            where T : struct
+        {
+            List<T?> items = new List<T?>();
+            using (DbConnection connection = await providerFactory.OpenConnection(settings))
+            {
+                using (DbCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = storedProcedureName;
+                    command.CommandType = CommandType.StoredProcedure;
+                    if (dataParameters != null && dataParameters.Length > 0)
+                    {
+                        for(int i = 0; i < dataParameters.Length; i += 1)
+                        {
+                            command.Parameters.Add(dataParameters[i]);
+                        }
+                    }
+                    using (DbDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            if (await reader.IsDBNullAsync(0))
+                                items.Add(null);
+                            else
+                                items.Add(await reader.GetFieldValueAsync<T>(0));
+                        }
+                    }
+                }
+            }
+            return items;
         }
     }
 }
