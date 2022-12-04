@@ -8,8 +8,8 @@
     <Product>Brass Loon</Product>
     <Description>Generic DBMS Interface</Description>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <Version>2.1.0-alpha.2</Version>
-    <AssemblyVersion>2.1.0.2</AssemblyVersion>
+    <Version>2.1.0</Version>
+    <AssemblyVersion>2.1.0.3</AssemblyVersion>
     <PackageReleaseNotes>-2.1 Added utility method DataUtil.ReadList; Mapping attribute ColumnName is optional; Added DataReaderProcess</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
