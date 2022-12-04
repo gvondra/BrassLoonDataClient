@@ -10,5 +10,15 @@ namespace BrassLoon.DataClient
         {
             Info.SetValue(model, value);
         }
+
+        public string GetColumnName()
+        {
+            string name = MappingAttribute.ColumnName;
+            if (string.IsNullOrEmpty(name))
+            {
+                name = Info.Name;
+            }
+            return name;
+        }
     }
 }

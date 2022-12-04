@@ -28,13 +28,14 @@ namespace BrassLoon.DataClient
             int ordinal;
             foreach (ColumnMapping columnMapping in columnMappings)
             {
+                string columnName = columnMapping.GetColumnName();
                 try
                 {
-                    ordinal = reader.GetOrdinal(columnMapping.MappingAttribute.ColumnName);
+                    ordinal = reader.GetOrdinal(columnName);
                 }
                 catch (Exception ex)
                 {
-                    throw new SourceColumnNotFound(columnMapping.MappingAttribute.ColumnName, ex);
+                    throw new SourceColumnNotFound(columnName, ex);
                 }
                 if (ordinal >= 0)
                 {

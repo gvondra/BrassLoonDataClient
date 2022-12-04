@@ -1,6 +1,12 @@
 using System;
 namespace BrassLoon.DataClient
 {
+    /// <summary>
+    /// Thrown when the data model class includes a column that is not found in the actual data set.
+    /// Ask:
+    /// - Does your data model include a column it shouldn't?
+    /// - Do you need to add a column to query result set?
+    /// </summary>
     public class SourceColumnNotFound : ApplicationException
     {
         public SourceColumnNotFound(string columnName)

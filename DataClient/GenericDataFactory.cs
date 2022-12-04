@@ -85,10 +85,9 @@ namespace BrassLoon.DataClient
             IEnumerable<IDataParameter> parameters, 
             CommandType commandType)
         {
+            if (string.IsNullOrEmpty(commandText))
+                throw new ArgumentNullException(nameof(commandText));
             IEnumerable<T> result;
-            int parameterCount = 0;
-            if (parameters != null)
-                parameterCount = parameters.Count();
             using (DbConnection connection = await openConnection())
             {
                 using (DbCommand command = connection.CreateCommand())
