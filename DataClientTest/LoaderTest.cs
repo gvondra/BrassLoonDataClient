@@ -31,6 +31,7 @@ namespace DataClientTest
             Assert.AreEqual(TEST_ID, model.Id);
             Assert.AreEqual(TEST_NAME.TrimEnd(), model.Name);
             Assert.AreEqual(TEST_TIMESTAMP, model.Timestamp);
+            Assert.AreEqual(1.01, model.Value);
         }
 
         private DbDataReader CreateReader()
@@ -49,8 +50,9 @@ namespace DataClientTest
         private class TestModel
         {
             [ColumnMapping("Id")] public int Id { get; set; }
-            [ColumnMapping("Name")] public string Name { get; set; }
+            [ColumnMapping()] public string Name { get; set; }
             [ColumnMapping("Timestamp")] public DateTime Timestamp { get; set; }
+            [ColumnMapping(IsOptional = true)] public double? Value { get; set; } = 1.01;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
@@ -25,24 +26,30 @@ namespace BrassLoon.DataClient
         public async Task<object> Load(object data, DbDataReader reader)
         {
             IEnumerable<ColumnMapping> columnMappings = GetColumnMappings(data);
+            Dictionary<string, int> fields = GetFields(reader);
             int ordinal;
             foreach (ColumnMapping columnMapping in columnMappings)
             {
                 string columnName = columnMapping.GetColumnName();
-                try
-                {
-                    ordinal = reader.GetOrdinal(columnName);
-                }
-                catch (Exception ex)
-                {
-                    throw new SourceColumnNotFound(columnName, ex);
-                }
+                ordinal = fields.ContainsKey(columnName) ? fields[columnName] : - 1;
+                if (!columnMapping.IsOptional && ordinal < 0)
+                    throw new SourceColumnNotFound(columnName);
                 if (ordinal >= 0)
                 {
                     columnMapping.SetValue(data, await GetValue(reader, ordinal, columnMapping));
                 }
             }
             return data;
+        }
+
+        private Dictionary<string, int> GetFields(IDataReader reader)
+        {
+            Dictionary<string, int> fields = new Dictionary<string, int>();
+            for (int i = 0; i < reader.FieldCount; i += 1)
+            {
+                fields.Add(reader.GetName(i), i);
+            }
+            return fields;
         }
 
         private async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
