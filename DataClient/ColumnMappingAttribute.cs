@@ -7,6 +7,7 @@ namespace BrassLoon.DataClient
         public string ColumnName { get; set; } = string.Empty;
         public bool IsPrimaryKey { get; set; } = false;
         public bool IsUtc { get; set; } = false;
+        public bool IsOptional { get; set; } = false;
 
         public ColumnMappingAttribute(string columnName) 
         {

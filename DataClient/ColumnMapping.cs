@@ -6,6 +6,8 @@ namespace BrassLoon.DataClient
         public ColumnMappingAttribute MappingAttribute { get; set; }
         public PropertyInfo Info { get; set; }
 
+        public bool IsOptional => MappingAttribute.IsOptional;
+
         public void SetValue(object model, object value) 
         {
             Info.SetValue(model, value);
