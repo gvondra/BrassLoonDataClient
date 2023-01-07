@@ -1,6 +1,5 @@
 using Microsoft.Data.SqlClient;
 using System;
-using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 
@@ -12,28 +11,33 @@ namespace BrassLoon.DataClient
         : base(Microsoft.Data.SqlClient.SqlClientFactory.Instance)
         {}
 
-        public async Task<DbConnection> OpenConnection(string connectionString, Func<Task<string>> getAccessToken)
+        public async Task<DbConnection> OpenConnection(string connectionString, Func<Task<string>> getAccessToken, bool useDefaultAzureToken = false)
         {
             if (string.IsNullOrEmpty(connectionString))
                 throw new ArgumentNullException(nameof(connectionString));
             DbConnection connection = InnerFactory.CreateConnection();
             connection.ConnectionString = connectionString;
-            await this.SetAccessToken(connection, getAccessToken);
+            await this.SetAccessToken(connection, getAccessToken, useDefaultAzureToken);
             await connection.OpenAsync();
             return connection;            
         }
 
         public async Task<DbConnection> OpenConnection(ISqlSettings settings)
         {
-            return await this.OpenConnection(await settings.GetConnectionString(), settings.GetAccessToken);
+            return await this.OpenConnection(await settings.GetConnectionString(), settings.GetAccessToken, useDefaultAzureToken: settings.UseDefaultAzureToken);
         }
 
-        private async Task SetAccessToken(DbConnection connection, Func<Task<string>> getAccessToken)
+        private async Task SetAccessToken(DbConnection connection, Func<Task<string>> getAccessToken, bool useDefaultAzureToken)
         {
             if (getAccessToken != null && !connection.GetType().Equals(typeof(SqlConnection)))
                 throw new ArgumentException($"Unable to set access token on connection of type {connection.GetType().FullName}");
+            string accessToken = null;
             if (getAccessToken != null)
-                ((SqlConnection)connection).AccessToken = await getAccessToken();
+                accessToken = await getAccessToken();
+            if (string.IsNullOrEmpty(accessToken) && useDefaultAzureToken)
+                accessToken = (await AzureTokenProvider.GetDefaultToken()).Token;
+            if (!string.IsNullOrEmpty(accessToken))
+                ((SqlConnection)connection).AccessToken = accessToken;
         }
 
         public override async Task<DbConnection> OpenConnection(ISettings settings)

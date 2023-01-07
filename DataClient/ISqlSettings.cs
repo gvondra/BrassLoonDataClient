@@ -9,5 +9,10 @@ namespace BrassLoon.DataClient
     public interface ISqlSettings : ISettings 
     {
         Func<Task<string>> GetAccessToken { get; }
+
+        /// <summary>
+        /// When true and GetAccessToken is null, a DefaultAzureCredential is retrieved from the default context "https://database.windows.net/.default"
+        /// </summary>
+        bool UseDefaultAzureToken { get; }
     }
 }
