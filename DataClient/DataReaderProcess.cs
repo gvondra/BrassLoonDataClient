@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BrassLoon.DataClient
@@ -17,7 +15,7 @@ namespace BrassLoon.DataClient
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
-            Action<DbDataReader> readAction = null)
+            Func<DbDataReader, Task> readAction = null)
         {
             return Read(() => providerFactory.OpenConnection(settings),
                 commandText,
@@ -32,7 +30,7 @@ namespace BrassLoon.DataClient
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
-            Action<DbDataReader> readAction = null)
+            Func<DbDataReader, Task> readAction = null)
         {
             return Read(() => providerFactory.OpenConnection(settings),
                 commandText,
@@ -42,16 +40,19 @@ namespace BrassLoon.DataClient
                 );
         }
 
-        public async Task Read(Func<Task<DbConnection>> openConnection, 
+        public async Task Read(
+            Func<Task<DbConnection>> openConnection, 
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
-            Action<DbDataReader> readAction = null)
+            Func<DbDataReader, Task> readAction = null)
         {
             if (string.IsNullOrEmpty(commandText))
                 throw new ArgumentNullException(nameof(commandText));
+            if (openConnection == null)
+                throw new ArgumentNullException(nameof(openConnection));
             if (readAction == null)
-                throw new ArgumentNullException(nameof(readAction));
+                readAction = (DbDataReader reader) => Task.CompletedTask;
             using (DbConnection connection = await openConnection())
             {
                 using (DbCommand command = connection.CreateCommand())
@@ -69,7 +70,7 @@ namespace BrassLoon.DataClient
                         command.CommandTimeout = CommandTimeout.Value;
                     using (DbDataReader reader = await command.ExecuteReaderAsync())
                     {
-                        readAction(reader);
+                        await readAction(reader);
                         reader.Close();
                     }
                 }

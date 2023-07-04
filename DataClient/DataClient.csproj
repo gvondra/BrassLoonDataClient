@@ -8,9 +8,10 @@
     <Product>Brass Loon</Product>
     <Description>Generic DBMS Interface</Description>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <Version>3.0.0</Version>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <Version>3.1.0</Version>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
     <PackageReleaseNotes>
+		-3.1 DataReaderProcessor requires async read action
 		-3.0 Added UseDefaultAzureToken to ISqlSettings
 		-2.2 Added IsOptional to column mapping attibute. Option fields will not be assigned a value when not found in the data set
 		-2.1 Added utility method DataUtil.ReadList; Mapping attribute ColumnName is optional; Added DataReaderProcess</PackageReleaseNotes>
@@ -37,6 +38,6 @@
 	
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="[1.8.0,2.0)" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="[5.0.1,6)" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="[5.0.2,6)" />
   </ItemGroup>
 </Project>
