@@ -121,10 +121,7 @@ namespace DataClientTest
             [ColumnMapping("Data")] public byte[] Data { get; set; }
             [ColumnMapping("Date")] public DateTime? Date { get; set; }
 
-            public object Clone()
-            {
-                return this.MemberwiseClone();
-            }
+            public object Clone() => this.MemberwiseClone();
         }
     }
 }

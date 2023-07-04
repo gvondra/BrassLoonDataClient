@@ -46,10 +46,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueGuidZeroTest()
-        {
-            Assert.IsTrue(DBNull.Value == DataUtil.GetParameterValue(Guid.Empty));
-        }
+        public void GetParameterValueGuidZeroTest() => Assert.IsTrue(DBNull.Value == DataUtil.GetParameterValue(Guid.Empty));
 
         [TestMethod]
         public void GetParameterValueGuidNullTest()
@@ -59,28 +56,16 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueStringTest()
-        {
-            Assert.AreEqual(" Test value", (string)DataUtil.GetParameterValue(" Test value ")); // notice that it will time spaces from the end
-        }
+        public void GetParameterValueStringTest() => Assert.AreEqual(" Test value", (string)DataUtil.GetParameterValue(" Test value ")); // notice that it will time spaces from the end
 
         [TestMethod]
-        public void GetParameterValueStringNullTest()
-        {            
-            Assert.AreSame(DBNull.Value, DataUtil.GetParameterValue(null, false));
-        }
+        public void GetParameterValueStringNullTest() => Assert.AreSame(DBNull.Value, DataUtil.GetParameterValue(null, false));
 
         [TestMethod]
-        public void GetParameterValueStringNullToEmptyTest()
-        {
-            Assert.AreEqual(string.Empty, (string)DataUtil.GetParameterValue(null, true));
-        }
+        public void GetParameterValueStringNullToEmptyTest() => Assert.AreEqual(string.Empty, (string)DataUtil.GetParameterValue(null, true));
 
         [TestMethod]
-        public void GetParameterValueDecimalTest()
-        {
-            Assert.AreEqual(14.41M, (decimal)DataUtil.GetParameterValue(14.41M));
-        }
+        public void GetParameterValueDecimalTest() => Assert.AreEqual(14.41M, (decimal)DataUtil.GetParameterValue(14.41M));
 
         [TestMethod]
         public void GetParameterValueDecimalNullTest()
@@ -90,10 +75,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueDoubleTest()
-        {
-            Assert.AreEqual(14.41, (double)DataUtil.GetParameterValue(14.41));
-        }
+        public void GetParameterValueDoubleTest() => Assert.AreEqual(14.41, (double)DataUtil.GetParameterValue(14.41));
 
         [TestMethod]
         public void GetParameterValueDoubleNullTest()
@@ -103,10 +85,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueLongTest()
-        {
-            Assert.AreEqual(1441L, (long)DataUtil.GetParameterValue(1441L));
-        }
+        public void GetParameterValueLongTest() => Assert.AreEqual(1441L, (long)DataUtil.GetParameterValue(1441L));
 
         [TestMethod]
         public void GetParameterValueLongNullTest()
@@ -130,10 +109,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueShortTest()
-        {
-            Assert.AreEqual((short)1441, (short)DataUtil.GetParameterValue((short)1441));
-        }
+        public void GetParameterValueShortTest() => Assert.AreEqual((short)1441, (short)DataUtil.GetParameterValue((short)1441));
 
         [TestMethod]
         public void GetParameterValueShortNullTest()
@@ -143,10 +119,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueByteTest()
-        {
-            Assert.AreEqual((byte)128, (byte)DataUtil.GetParameterValue((byte)128));
-        }
+        public void GetParameterValueByteTest() => Assert.AreEqual((byte)128, (byte)DataUtil.GetParameterValue((byte)128));
 
         [TestMethod]
         public void GetParameterValueByteNullTest()
@@ -189,7 +162,7 @@ namespace DataClientTest
         {
             XmlDocument document = new XmlDocument();
             document.AppendChild(document.CreateElement("test"));
-            
+
             string result = (string)DataUtil.GetParameterValue(document.DocumentElement);
             Assert.IsNotNull(result);
             Assert.AreEqual("<test />", result);

@@ -5,14 +5,11 @@ using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 using System.Xml;
-namespace BrassLoon.DataClient 
+namespace BrassLoon.DataClient
 {
     public static class DataUtil
     {
-        public static IDataParameter CreateParameter(IDbProviderFactory providerFactory, DbType type)
-        {
-            return CreateParameter(providerFactory, null, type);
-        }
+        public static IDataParameter CreateParameter(IDbProviderFactory providerFactory, DbType type) => CreateParameter(providerFactory, null, type);
 
         public static IDataParameter CreateParameter(IDbProviderFactory providerFactory, string name, DbType type)
         {
@@ -38,7 +35,7 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue && !value.Value.Equals(Guid.Empty))
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -55,18 +52,20 @@ namespace BrassLoon.DataClient
             {
                 if (treatNullAsEmpty)
                     return string.Empty;
-                else 
+                else
                     return DBNull.Value;
             }
-            else 
+            else
+            {
                 return value.TrimEnd();
+            }
         }
 
         public static object GetParameterValue(decimal? value)
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -74,7 +73,7 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -82,7 +81,7 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -90,15 +89,15 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue)
                 return value.Value;
-            else 
-                return DBNull.Value; 
+            else
+                return DBNull.Value;
         }
 
         public static object GetParameterValue(short? value)
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -106,7 +105,7 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -114,7 +113,7 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -122,7 +121,7 @@ namespace BrassLoon.DataClient
         {
             if (value == null)
                 return DBNull.Value;
-            else 
+            else
                 return value;
         }
 
@@ -130,7 +129,7 @@ namespace BrassLoon.DataClient
         {
             if (value == null)
                 return DBNull.Value;
-            else 
+            else
                 return value.OuterXml;
         }
 
@@ -138,7 +137,7 @@ namespace BrassLoon.DataClient
         {
             if (value.HasValue)
                 return value.Value;
-            else 
+            else
                 return DBNull.Value;
         }
 
@@ -152,7 +151,9 @@ namespace BrassLoon.DataClient
                     return falseResponse;
             }
             else
+            {
                 return string.Empty;
+            }
         }
 
         public static void AddParameter(
@@ -160,11 +161,8 @@ namespace BrassLoon.DataClient
             IList parameterCollection,
             string name,
             DbType dbType,
-            object value
-        ) 
-        {
-            parameterCollection.Add(CreateParameter(providerFactory, name, dbType, value));
-        }
+            object value)
+            => parameterCollection.Add(CreateParameter(providerFactory, name, dbType, value));
 
         public static void AssignDataStateManager(IEnumerable<IDataManagedState> data)
         {
@@ -183,7 +181,7 @@ namespace BrassLoon.DataClient
         /// <param name="storedProcedureName">name of stored proc. to execute</param>
         /// <param name="dataParameters">data parameters passed to the stroed proc.</param>
         /// <returns>List of values from the executed stored proc.</returns>
-        public async static Task<IEnumerable<T>> ReadList<T>(
+        public static async Task<IEnumerable<T>> ReadList<T>(
             IDbProviderFactory providerFactory,
             ISettings settings,
             string storedProcedureName,
@@ -199,7 +197,7 @@ namespace BrassLoon.DataClient
                     command.CommandType = CommandType.StoredProcedure;
                     if (dataParameters != null && dataParameters.Length > 0)
                     {
-                        for(int i = 0; i < dataParameters.Length; i += 1)
+                        for (int i = 0; i < dataParameters.Length; i += 1)
                         {
                             command.Parameters.Add(dataParameters[i]);
                         }
