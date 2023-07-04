@@ -9,7 +9,7 @@ namespace BrassLoon.DataClient
     {
         public SqlClientProviderFactory()
         : base(Microsoft.Data.SqlClient.SqlClientFactory.Instance)
-        {}
+        { }
 
         public async Task<DbConnection> OpenConnection(string connectionString, Func<Task<string>> getAccessToken, bool useDefaultAzureToken = false)
         {
@@ -17,17 +17,15 @@ namespace BrassLoon.DataClient
                 throw new ArgumentNullException(nameof(connectionString));
             DbConnection connection = InnerFactory.CreateConnection();
             connection.ConnectionString = connectionString;
-            await this.SetAccessToken(connection, getAccessToken, useDefaultAzureToken);
+            await SetAccessToken(connection, getAccessToken, useDefaultAzureToken);
             await connection.OpenAsync();
-            return connection;            
+            return connection;
         }
 
         public async Task<DbConnection> OpenConnection(ISqlSettings settings)
-        {
-            return await this.OpenConnection(await settings.GetConnectionString(), settings.GetAccessToken, useDefaultAzureToken: settings.UseDefaultAzureToken);
-        }
+            => await this.OpenConnection(await settings.GetConnectionString(), settings.GetAccessToken, useDefaultAzureToken: settings.UseDefaultAzureToken);
 
-        private async Task SetAccessToken(DbConnection connection, Func<Task<string>> getAccessToken, bool useDefaultAzureToken)
+        private static async Task SetAccessToken(DbConnection connection, Func<Task<string>> getAccessToken, bool useDefaultAzureToken)
         {
             if (getAccessToken != null && !connection.GetType().Equals(typeof(SqlConnection)))
                 throw new ArgumentException($"Unable to set access token on connection of type {connection.GetType().FullName}");
@@ -46,7 +44,7 @@ namespace BrassLoon.DataClient
                 throw new ArgumentNullException(nameof(settings));
             if (typeof(ISqlSettings).IsAssignableFrom(settings.GetType()))
                 return await this.OpenConnection((ISqlSettings)settings);
-            else 
+            else
                 return await base.OpenConnection(await settings.GetConnectionString());
         }
     }

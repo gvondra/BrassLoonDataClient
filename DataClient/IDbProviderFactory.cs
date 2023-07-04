@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-namespace BrassLoon.DataClient 
+namespace BrassLoon.DataClient
 {
     public interface IDbProviderFactory
     {

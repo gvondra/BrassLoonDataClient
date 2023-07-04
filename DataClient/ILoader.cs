@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BrassLoon.DataClient
 {
-    public interface ILoader 
+    public interface ILoader
     {
         Task<object> Load(object data, DbDataReader reader);
     }

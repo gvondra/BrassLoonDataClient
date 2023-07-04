@@ -133,12 +133,12 @@ namespace BrassLoon.DataClient
             return data;
         }
 
-        public async Task<IEnumerable<R>> LoadData<R>(DbDataReader reader, Func<R> createModelObject)
+        public async Task<IEnumerable<TModel>> LoadData<TModel>(DbDataReader reader, Func<TModel> createModelObject)
             => await this.LoadData(this.LoaderFactory.CreateLoader(), reader, createModelObject);
 
-        public async Task<IEnumerable<R>> LoadData<R>(DbDataReader reader, Func<R> createModelObject, Action<IEnumerable<R>> assignDataStateManager)
+        public async Task<IEnumerable<TModel>> LoadData<TModel>(DbDataReader reader, Func<TModel> createModelObject, Action<IEnumerable<TModel>> assignDataStateManager)
         {
-            IEnumerable<R> data = await LoadData(reader, createModelObject);
+            IEnumerable<TModel> data = await LoadData(reader, createModelObject);
             if (assignDataStateManager != null)
             {
                 assignDataStateManager(data);

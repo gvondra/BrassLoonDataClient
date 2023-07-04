@@ -23,7 +23,7 @@ namespace BrassLoon.DataClient
         Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters);
         Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters, CommandType commandType);
 
-        Task<IEnumerable<R>> LoadData<R>(DbDataReader reader, Func<R> createModelObject);
-        Task<IEnumerable<R>> LoadData<R>(DbDataReader reader, Func<R> createModelObject, Action<IEnumerable<R>> assignDataStateManager);
+        Task<IEnumerable<TModel>> LoadData<TModel>(DbDataReader reader, Func<TModel> createModelObject);
+        Task<IEnumerable<TModel>> LoadData<TModel>(DbDataReader reader, Func<TModel> createModelObject, Action<IEnumerable<TModel>> assignDataStateManager);
     }
 }

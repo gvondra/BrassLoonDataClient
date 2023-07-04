@@ -9,12 +9,14 @@ namespace BrassLoon.DataClient
         public DbProviderFactory()
         {
             InnerFactory = Microsoft.Data.SqlClient.SqlClientFactory.Instance;
-        }    
+        }
+
         public DbProviderFactory(System.Data.Common.DbProviderFactory providerFactory)
         {
             InnerFactory = providerFactory;
-        }        
-        protected System.Data.Common.DbProviderFactory InnerFactory { get; set;}
+        }
+
+        protected System.Data.Common.DbProviderFactory InnerFactory { get; set; }
 
         public DbConnection CreateConnection() => InnerFactory.CreateConnection();
         public IDataParameter CreateParameter() => InnerFactory.CreateParameter();
@@ -30,7 +32,7 @@ namespace BrassLoon.DataClient
                 {
                     transactionHandler.Connection.Dispose();
                     transactionHandler.Connection = null;
-                }                
+                }
             }
             // second open a connection if no connection is already set
             if (transactionHandler.Connection == null)
@@ -53,9 +55,7 @@ namespace BrassLoon.DataClient
         }
 
         public virtual async Task<DbConnection> OpenConnection(ISettings settings)
-        {
-            return await OpenConnection(await settings.GetConnectionString());
-        }
+            => await OpenConnection(await settings.GetConnectionString());
 
         public virtual async Task<DbConnection> OpenConnection(string connectionString)
         {

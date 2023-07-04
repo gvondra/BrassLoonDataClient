@@ -9,7 +9,7 @@ namespace BrassLoon.DataClient.LoaderComponents
         {
             object result = null;
             if (!await reader.IsDBNullAsync(ordinal))
-            {                
+            {
                 if (reader.GetFieldType(ordinal).Equals(typeof(string)))
                     result = Guid.Parse((await reader.GetFieldValueAsync<string>(ordinal)).Trim());
                 else if (reader.GetFieldType(ordinal).Equals(typeof(byte[])))

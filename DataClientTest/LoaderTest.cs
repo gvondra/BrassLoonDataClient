@@ -1,10 +1,8 @@
 ﻿using BrassLoon.DataClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Text;
 
 namespace DataClientTest
 {
@@ -13,7 +11,7 @@ namespace DataClientTest
     {
         private const int TEST_ID = 42;
         private const string TEST_NAME = "Homer Simpson ";
-        private DateTime TEST_TIMESTAMP = new DateTime(2020, 02, 02, 14, 20, 0);
+        private readonly DateTime TEST_TIMESTAMP = new DateTime(2020, 02, 02, 14, 20, 0);
 
         [TestMethod]
         public void LoadTest()

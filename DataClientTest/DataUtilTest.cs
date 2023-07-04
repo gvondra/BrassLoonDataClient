@@ -109,7 +109,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueShortTest() => Assert.AreEqual((short)1441, (short)DataUtil.GetParameterValue((short)1441));
+        public void GetParameterValueShortTest() => Assert.AreEqual((short)1441, (short)DataUtil.GetParameterValue(1441));
 
         [TestMethod]
         public void GetParameterValueShortNullTest()
@@ -119,7 +119,7 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueByteTest() => Assert.AreEqual((byte)128, (byte)DataUtil.GetParameterValue((byte)128));
+        public void GetParameterValueByteTest() => Assert.AreEqual((byte)128, (byte)DataUtil.GetParameterValue(128));
 
         [TestMethod]
         public void GetParameterValueByteNullTest()

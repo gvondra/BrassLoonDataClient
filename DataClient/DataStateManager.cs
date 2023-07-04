@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-namespace BrassLoon.DataClient 
+namespace BrassLoon.DataClient
 {
     public class DataStateManager : IDataStateManager
     {
@@ -11,27 +11,27 @@ namespace BrassLoon.DataClient
             this.Original = original;
         }
 
-        public DataStateManager() {}
+        public DataStateManager() { }
 
-        public object Original { get; set;}
+        public object Original { get; set; }
 
         public DataState GetState(object target)
         {
             DataState result = DataState.Unchanged;
             if (this.Original == null)
+            {
                 result = DataState.New;
+            }
             else if (target != null && target != Original)
             {
-                if (GetProperties(target.GetType()).Any((PropertyInfo p) => IsChanged(p, target)))
+                if (DataStateManager.GetProperties(target.GetType()).Any((PropertyInfo p) => IsChanged(p, target)))
                     result = DataState.Updated;
             }
             return result;
         }
 
         public bool IsChanged(PropertyInfo property, object target)
-        {
-            return IsChanged(property, this.Original, target);
-        }
+            => IsChanged(property, this.Original, target);
 
         public bool IsChanged(PropertyInfo property, object original, object target)
         {
@@ -41,8 +41,10 @@ namespace BrassLoon.DataClient
             if (originalValue != targetValue)
             {
                 if (originalValue == null || targetValue == null)
+                {
                     changed = true;
-                else if (property.PropertyType.Name == "Nullable`1" && property.PropertyType.GenericTypeArguments.Length > 0) 
+                }
+                else if (property.PropertyType.Name == "Nullable`1" && property.PropertyType.GenericTypeArguments.Length > 0)
                 {
                     if (IsNullableChanged(property.PropertyType, originalValue, targetValue))
                         changed = true;
@@ -51,7 +53,7 @@ namespace BrassLoon.DataClient
                 {
                     if (property.PropertyType.Equals(typeof(byte[])))
                     {
-                        if (IsByteArrayChanged((byte[])originalValue, (byte[])targetValue))
+                        if (DataStateManager.IsByteArrayChanged((byte[])originalValue, (byte[])targetValue))
                             changed = true;
                     }
                     else if (originalValue.ToString() != targetValue.ToString())
@@ -64,14 +66,14 @@ namespace BrassLoon.DataClient
         }
 
         public bool IsNullableChanged(Type type, object originalValue, object targetValue)
-        {                      
+        {
             bool changed = false;
             PropertyInfo hasValue = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where((PropertyInfo p) => p.CanRead && p.Name == "HasValue" && p.PropertyType.Equals(typeof(bool)))
                 .First()
                 ;
             bool originalHasValue = (bool)hasValue.GetValue(originalValue);
-            bool targetHasValue = (bool)hasValue.GetValue(targetValue);  
+            bool targetHasValue = (bool)hasValue.GetValue(targetValue);
             if (originalHasValue != targetHasValue)
                 changed = true;
             if (!changed && originalHasValue == targetHasValue && originalHasValue)
@@ -85,20 +87,22 @@ namespace BrassLoon.DataClient
             return changed;
         }
 
-        public bool IsByteArrayChanged(byte[] originalValue, byte[] targetValue)
+        public static bool IsByteArrayChanged(byte[] originalValue, byte[] targetValue)
         {
             bool changed = false;
             int i;
             if (originalValue != null && originalValue != targetValue)
             {
                 if (originalValue.Length != targetValue.Length)
+                {
                     changed = true;
+                }
                 else
                 {
                     i = 0;
                     while (!changed && i < originalValue.Length)
                     {
-                        if (originalValue[i] != targetValue[i]) 
+                        if (originalValue[i] != targetValue[i])
                             changed = true;
                         i += 1;
                     }
@@ -107,7 +111,7 @@ namespace BrassLoon.DataClient
             return changed;
         }
 
-        public IEnumerable<PropertyInfo> GetProperties(Type type)
+        public static IEnumerable<PropertyInfo> GetProperties(Type type)
         {
             return type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => p.CanRead && p.GetCustomAttributes<ColumnMappingAttribute>(true).Any())

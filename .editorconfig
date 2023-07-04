@@ -119,3 +119,8 @@ dotnet_style_qualification_for_property = false:silent
 
 # IDE0032: Use auto property
 dotnet_diagnostic.IDE0032.severity = none
+
+
+dotnet_diagnostic.IDE0002.severity = none
+dotnet_diagnostic.IDE0003.severity = none
+dotnet_diagnostic.IDE1005.severity = none

@@ -4,9 +4,6 @@ namespace BrassLoon.DataClient.LoaderComponents
 {
     public class ByteComponent : PrimativeLoaderComponent<byte>, ILoaderComponent
     {
-        public async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
-        {
-            return await base.GetFieldValue(reader, ordinal);
-        }
+        public async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping) => await base.GetFieldValue(reader, ordinal);
     }
 }

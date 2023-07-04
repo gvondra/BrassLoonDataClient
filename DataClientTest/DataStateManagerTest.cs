@@ -1,9 +1,6 @@
 ﻿using BrassLoon.DataClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DataClientTest
 {
@@ -93,8 +90,7 @@ namespace DataClientTest
         {
             byte[] array1 = new byte[] { 0, 0, 1 };
             byte[] array2 = new byte[] { 0, 0, 1 };
-            DataStateManager dataStateManager = new DataStateManager();
-            Assert.IsFalse(dataStateManager.IsByteArrayChanged(array1, array2));
+            Assert.IsFalse(DataStateManager.IsByteArrayChanged(array1, array2));
         }
 
         [TestMethod]
@@ -102,8 +98,7 @@ namespace DataClientTest
         {
             byte[] array1 = new byte[] { 0, 0, 1 };
             byte[] array2 = new byte[] { 0, 1, 1 };
-            DataStateManager dataStateManager = new DataStateManager();
-            Assert.IsTrue(dataStateManager.IsByteArrayChanged(array1, array2));
+            Assert.IsTrue(DataStateManager.IsByteArrayChanged(array1, array2));
         }
 
         [TestMethod]
@@ -111,8 +106,7 @@ namespace DataClientTest
         {
             byte[] array1 = new byte[] { 0, 0 };
             byte[] array2 = new byte[] { 0, 0, 0 };
-            DataStateManager dataStateManager = new DataStateManager();
-            Assert.IsTrue(dataStateManager.IsByteArrayChanged(array1, array2));
+            Assert.IsTrue(DataStateManager.IsByteArrayChanged(array1, array2));
         }
 
         private class TestModel : ICloneable

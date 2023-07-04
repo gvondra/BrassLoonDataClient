@@ -8,15 +8,12 @@ namespace BrassLoon.DataClient.LoaderComponents
         {
             byte[] result = null;
             if (!await reader.IsDBNullAsync(ordinal))
-            {                
+            {
                 result = await reader.GetFieldValueAsync<byte[]>(ordinal);
             }
             return result;
         }
 
-        public bool IsApplicable(ColumnMapping mapping)
-        {
-            return mapping.Info.PropertyType.Equals(typeof(byte[]));
-        }
+        public bool IsApplicable(ColumnMapping mapping) => mapping.Info.PropertyType.Equals(typeof(byte[]));
     }
 }

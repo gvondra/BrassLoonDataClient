@@ -41,7 +41,7 @@ namespace BrassLoon.DataClient
         }
 
         public async Task Read(
-            Func<Task<DbConnection>> openConnection, 
+            Func<Task<DbConnection>> openConnection,
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,

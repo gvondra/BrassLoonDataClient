@@ -7,9 +7,7 @@ namespace BrassLoon.DataClient
     public static class AzureTokenProvider
     {
         public static Task<AccessToken> GetDefaultToken()
-        {
-            return GetDefaultToken(GetDefaultAzureCredentialOptions());
-        }
+            => GetDefaultToken(GetDefaultAzureCredentialOptions());
 
         public static async Task<AccessToken> GetDefaultToken(DefaultAzureCredentialOptions options)
         {

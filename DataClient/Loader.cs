@@ -11,8 +11,8 @@ namespace BrassLoon.DataClient
 {
     public class Loader : ILoader
     {
-        private static Dictionary<Type, List<ColumnMapping>> _columnMappings;
-        private static AutoResetEvent _mappingsLock;
+        private static readonly Dictionary<Type, List<ColumnMapping>> _columnMappings;
+        private static readonly AutoResetEvent _mappingsLock;
 
         static Loader()
         {
@@ -25,13 +25,13 @@ namespace BrassLoon.DataClient
         /// data is the model that values will be assigned to
         public async Task<object> Load(object data, DbDataReader reader)
         {
-            IEnumerable<ColumnMapping> columnMappings = GetColumnMappings(data);
-            Dictionary<string, int> fields = GetFields(reader);
+            IEnumerable<ColumnMapping> columnMappings = Loader.GetColumnMappings(data);
+            Dictionary<string, int> fields = Loader.GetFields(reader);
             int ordinal;
             foreach (ColumnMapping columnMapping in columnMappings)
             {
                 string columnName = columnMapping.GetColumnName();
-                ordinal = fields.ContainsKey(columnName) ? fields[columnName] : - 1;
+                ordinal = fields.ContainsKey(columnName) ? fields[columnName] : -1;
                 if (!columnMapping.IsOptional && ordinal < 0)
                     throw new SourceColumnNotFound(columnName);
                 if (ordinal >= 0)
@@ -42,7 +42,7 @@ namespace BrassLoon.DataClient
             return data;
         }
 
-        private Dictionary<string, int> GetFields(IDataReader reader)
+        private static Dictionary<string, int> GetFields(IDataReader reader)
         {
             Dictionary<string, int> fields = new Dictionary<string, int>();
             for (int i = 0; i < reader.FieldCount; i += 1)
@@ -70,7 +70,7 @@ namespace BrassLoon.DataClient
             return value;
         }
 
-        private List<ColumnMapping> GetColumnMappings(object data)
+        private static List<ColumnMapping> GetColumnMappings(object data)
         {
             Type type = data.GetType();
             if (!_columnMappings.ContainsKey(type))
@@ -79,7 +79,7 @@ namespace BrassLoon.DataClient
                 try
                 {
                     if (!_columnMappings.ContainsKey(type))
-                        _columnMappings.Add(type, LoadColumnMappings(type));
+                        _columnMappings.Add(type, Loader.LoadColumnMappings(type));
                 }
                 finally
                 {
@@ -89,10 +89,10 @@ namespace BrassLoon.DataClient
             return _columnMappings[type];
         }
 
-        private List<ColumnMapping> LoadColumnMappings(Type type)
+        private static List<ColumnMapping> LoadColumnMappings(Type type)
         {
             List<ColumnMapping> mappings = new List<ColumnMapping>();
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);    
+            PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             if (properties != null)
             {
                 for (int i = 0; i < properties.Length; i += 1)

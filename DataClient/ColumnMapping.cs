@@ -1,5 +1,5 @@
 using System.Reflection;
-namespace BrassLoon.DataClient 
+namespace BrassLoon.DataClient
 {
     public class ColumnMapping
     {
@@ -8,10 +8,8 @@ namespace BrassLoon.DataClient
 
         public bool IsOptional => MappingAttribute.IsOptional;
 
-        public void SetValue(object model, object value) 
-        {
-            Info.SetValue(model, value);
-        }
+        public void SetValue(object model, object value)
+            => Info.SetValue(model, value);
 
         public string GetColumnName()
         {

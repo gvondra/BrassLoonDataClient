@@ -14,9 +14,7 @@ namespace BrassLoon.DataClient.LoaderComponents
             return result;
         }
 
-        public virtual bool IsApplicable(ColumnMapping mapping) 
-        {
-            return mapping.Info.PropertyType.Equals(typeof(T)) || mapping.Info.PropertyType.Equals(typeof(Nullable<T>));
-        }
+        public virtual bool IsApplicable(ColumnMapping mapping)
+            => mapping.Info.PropertyType.Equals(typeof(T)) || mapping.Info.PropertyType.Equals(typeof(Nullable<T>));
     }
 }
