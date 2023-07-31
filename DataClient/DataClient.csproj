@@ -8,9 +8,10 @@
     <Product>Brass Loon</Product>
     <Description>Generic DBMS Interface</Description>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <Version>3.1.0</Version>
-    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <Version>3.2.0</Version>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
     <PackageReleaseNotes>
+		-3.2 ExcludeSharedTokenCacheCredential from default token
 		-3.1 DataReaderProcessor requires async read action
 		-3.0 Added UseDefaultAzureToken to ISqlSettings
 		-2.2 Added IsOptional to column mapping attibute. Option fields will not be assigned a value when not found in the data set

@@ -22,7 +22,7 @@ namespace BrassLoon.DataClient
             {
                 ExcludeAzureCliCredential = false,
                 ExcludeAzurePowerShellCredential = false,
-                ExcludeSharedTokenCacheCredential = false,
+                ExcludeSharedTokenCacheCredential = true,
                 ExcludeEnvironmentCredential = false,
                 ExcludeManagedIdentityCredential = false,
                 ExcludeVisualStudioCodeCredential = false,
