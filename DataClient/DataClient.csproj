@@ -8,9 +8,10 @@
     <Product>Brass Loon</Product>
     <Description>Generic DBMS Interface</Description>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <Version>3.2.0</Version>
-    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <Version>3.3.0</Version>
+    <AssemblyVersion>3.3.0.0</AssemblyVersion>
     <PackageReleaseNotes>
+		-3.3 Reusing default credential to enable token caching and improve performance
 		-3.2 ExcludeSharedTokenCacheCredential from default token
 		-3.1 DataReaderProcessor requires async read action
 		-3.0 Added UseDefaultAzureToken to ISqlSettings

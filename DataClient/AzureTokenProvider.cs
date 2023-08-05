@@ -6,15 +6,14 @@ namespace BrassLoon.DataClient
 {
     public static class AzureTokenProvider
     {
-        public static Task<AccessToken> GetDefaultToken()
-            => GetDefaultToken(GetDefaultAzureCredentialOptions());
+        private static readonly TokenRequestContext _databaseTokenRequestContext = CreateTokenRequestContext();
+        private static readonly DefaultAzureCredential _defaultAzureCredential = CreateDefaultAzureCredential();
 
-        public static async Task<AccessToken> GetDefaultToken(DefaultAzureCredentialOptions options)
-        {
-            TokenRequestContext context = new TokenRequestContext(new[] { "https://database.windows.net/.default" });
-            return await new DefaultAzureCredential(options)
-                .GetTokenAsync(context);
-        }
+        public static async Task<AccessToken> GetDefaultToken() => await _defaultAzureCredential.GetTokenAsync(_databaseTokenRequestContext);
+
+        private static TokenRequestContext CreateTokenRequestContext() => new TokenRequestContext(new[] { "https://database.windows.net/.default" });
+
+        private static DefaultAzureCredential CreateDefaultAzureCredential() => new DefaultAzureCredential(GetDefaultAzureCredentialOptions());
 
         public static DefaultAzureCredentialOptions GetDefaultAzureCredentialOptions()
         {
