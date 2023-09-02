@@ -44,6 +44,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"gvondra_BrassLoonDataClient" /o:"gvondra" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build -c Debug .\DataClient\DataClient.csproj
-          dotnet test -c Debug .\DataClientTest\DataClientTest.csproj
+          dotnet build -c Debug .\DataClient.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
