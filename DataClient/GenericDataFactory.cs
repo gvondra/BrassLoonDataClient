@@ -8,9 +8,6 @@ namespace BrassLoon.DataClient
 {
     public class GenericDataFactory<T> : IGenericDataFactory<T>
     {
-        public ILoaderFactory LoaderFactory { get; set; }
-        public int? CommandTimeout { get; set; }
-
         public GenericDataFactory()
         {
             LoaderFactory = new LoaderFactory();
@@ -20,6 +17,9 @@ namespace BrassLoon.DataClient
         {
             LoaderFactory = loaderFactory;
         }
+
+        public ILoaderFactory LoaderFactory { get; set; }
+        public int? CommandTimeout { get; set; }
 
         public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject)
             => GetData(settings, providerFactory, commandText, createModelObject, null, CommandType.StoredProcedure);
@@ -32,7 +32,6 @@ namespace BrassLoon.DataClient
 
         public Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, IEnumerable<IDataParameter> parameters)
             => GetData(settings, providerFactory, commandText, createModelObject, parameters, CommandType.StoredProcedure);
-
 
         public Task<IEnumerable<T>> GetData(
             ISettings settings,
@@ -47,10 +46,8 @@ namespace BrassLoon.DataClient
                 commandText,
                 createModelObject,
                 parameters,
-                commandType
-                );
+                commandType);
         }
-
 
         public Task<IEnumerable<T>> GetData(
             ISqlSettings settings,
@@ -65,8 +62,7 @@ namespace BrassLoon.DataClient
                 commandText,
                 createModelObject,
                 parameters,
-                commandType
-                );
+                commandType);
         }
 
         public async Task<IEnumerable<T>> GetData(

@@ -5,8 +5,9 @@ namespace BrassLoon.DataClient
 {
     public class DbTransaction : IDbTransaction
     {
-        private System.Data.Common.DbTransaction _innerTransaction;
         private readonly List<IDbTransactionObserver> _observers = new List<IDbTransactionObserver>();
+        private System.Data.Common.DbTransaction _innerTransaction;
+        private bool _disposedValue;
 
         public DbTransaction(System.Data.Common.DbTransaction transaction)
         {
@@ -32,14 +33,6 @@ namespace BrassLoon.DataClient
             }
         }
 
-        public void Dispose()
-        {
-            _observers.Clear();
-            _innerTransaction.Dispose();
-            _innerTransaction = null;
-            GC.SuppressFinalize(this);
-        }
-
         public void Rollback()
         {
             foreach (IDbTransactionObserver observer in _observers)
@@ -50,6 +43,27 @@ namespace BrassLoon.DataClient
             foreach (IDbTransactionObserver observer in _observers)
             {
                 observer.AfterRollback();
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _observers.Clear();
+                    _innerTransaction.Dispose();
+                    _innerTransaction = null;
+                }
+                _disposedValue = true;
             }
         }
     }

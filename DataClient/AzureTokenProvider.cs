@@ -8,12 +8,7 @@ namespace BrassLoon.DataClient
     {
         private static readonly TokenRequestContext _databaseTokenRequestContext = CreateTokenRequestContext();
         private static readonly DefaultAzureCredential _defaultAzureCredential = CreateDefaultAzureCredential();
-
-        public static async Task<AccessToken> GetDefaultToken() => await _defaultAzureCredential.GetTokenAsync(_databaseTokenRequestContext);
-
-        private static TokenRequestContext CreateTokenRequestContext() => new TokenRequestContext(new[] { "https://database.windows.net/.default" });
-
-        private static DefaultAzureCredential CreateDefaultAzureCredential() => new DefaultAzureCredential(GetDefaultAzureCredentialOptions());
+        private static readonly string[] _scopes = new[] { "https://database.windows.net/.default" };
 
         public static DefaultAzureCredentialOptions GetDefaultAzureCredentialOptions()
         {
@@ -28,5 +23,11 @@ namespace BrassLoon.DataClient
                 ExcludeVisualStudioCredential = false
             };
         }
+
+        public static async Task<AccessToken> GetDefaultToken() => await _defaultAzureCredential.GetTokenAsync(_databaseTokenRequestContext);
+
+        private static TokenRequestContext CreateTokenRequestContext() => new TokenRequestContext(_scopes);
+
+        private static DefaultAzureCredential CreateDefaultAzureCredential() => new DefaultAzureCredential(GetDefaultAzureCredentialOptions());
     }
 }

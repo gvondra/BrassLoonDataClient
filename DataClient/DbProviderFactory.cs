@@ -26,13 +26,10 @@ namespace BrassLoon.DataClient
         public async Task EstablishTransaction(ITransactionHandler transactionHandler, params IDbTransactionObserver[] observers)
         {
             // first check the connection state.  If it's not open then dispose of it
-            if (transactionHandler.Connection != null)
+            if (transactionHandler.Connection != null && transactionHandler.Connection.State != ConnectionState.Open)
             {
-                if (transactionHandler.Connection.State != ConnectionState.Open)
-                {
-                    transactionHandler.Connection.Dispose();
-                    transactionHandler.Connection = null;
-                }
+                transactionHandler.Connection.Dispose();
+                transactionHandler.Connection = null;
             }
             // second open a connection if no connection is already set
             if (transactionHandler.Connection == null)

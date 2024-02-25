@@ -67,6 +67,42 @@ dotnet_diagnostic.SA1516.severity = none
 
 dotnet_diagnostic.SA0001.severity = none
 
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = none
+
+# SA1502: Element should not be on a single line
+dotnet_diagnostic.SA1502.severity = none
+
+# CA1510: Use ArgumentNullException throw helper
+dotnet_diagnostic.CA1510.severity = none
+
+# S6562: Always set the "DateTimeKind" when creating new "DateTime" instances
+dotnet_diagnostic.S6562.severity = none
+
+# SA1134: Attributes should not share line
+dotnet_diagnostic.SA1134.severity = none
+
+# SA1310: Field names should not contain underscore
+dotnet_diagnostic.SA1310.severity = none
+
+# IDE0290: Use primary constructor
+dotnet_diagnostic.IDE0290.severity = none
+
+# SA1623: Property summary documentation should match accessors
+dotnet_diagnostic.SA1623.severity = none
+
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+
+# SA1515: Single-line comment should be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none
+
+# SA1614: Element parameter documentation should have text
+dotnet_diagnostic.SA1614.severity = none
+
+# SA1616: Element return value documentation should have text
+dotnet_diagnostic.SA1616.severity = none
+
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
 tab_width = 4
@@ -159,3 +195,6 @@ dotnet_diagnostic.IDE1005.severity = none
 
 # IDE0028: Simplify collection initialization
 dotnet_diagnostic.IDE0028.severity = none
+
+# IDE0300: Simplify collection initialization
+dotnet_diagnostic.IDE0300.severity = none

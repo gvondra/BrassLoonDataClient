@@ -25,6 +25,16 @@ namespace BrassLoon.DataClient
         public async Task<DbConnection> OpenConnection(ISqlSettings settings)
             => await this.OpenConnection(await settings.GetConnectionString(), settings.GetAccessToken, useDefaultAzureToken: settings.UseDefaultAzureToken);
 
+        public override async Task<DbConnection> OpenConnection(ISettings settings)
+        {
+            if (settings == null)
+                throw new ArgumentNullException(nameof(settings));
+            if (settings is ISqlSettings sqlSettings)
+                return await this.OpenConnection(sqlSettings);
+            else
+                return await OpenConnection(await settings.GetConnectionString());
+        }
+
         private static async Task SetAccessToken(DbConnection connection, Func<Task<string>> getAccessToken, bool useDefaultAzureToken)
         {
             if (getAccessToken != null && !connection.GetType().Equals(typeof(SqlConnection)))
@@ -36,16 +46,6 @@ namespace BrassLoon.DataClient
                 accessToken = (await AzureTokenProvider.GetDefaultToken()).Token;
             if (!string.IsNullOrEmpty(accessToken))
                 ((SqlConnection)connection).AccessToken = accessToken;
-        }
-
-        public override async Task<DbConnection> OpenConnection(ISettings settings)
-        {
-            if (settings == null)
-                throw new ArgumentNullException(nameof(settings));
-            if (typeof(ISqlSettings).IsAssignableFrom(settings.GetType()))
-                return await this.OpenConnection((ISqlSettings)settings);
-            else
-                return await base.OpenConnection(await settings.GetConnectionString());
         }
     }
 }

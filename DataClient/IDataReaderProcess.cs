@@ -10,21 +10,24 @@ namespace BrassLoon.DataClient
     {
         int? CommandTimeout { get; set; }
 
-        Task Read(ISqlSettings settings,
+        Task Read(
+            ISqlSettings settings,
             ISqlDbProviderFactory providerFactory,
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
             Action<DbDataReader> readAction = null);
 
-        Task Read(ISettings settings,
+        Task Read(
+            ISettings settings,
             IDbProviderFactory providerFactory,
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
             Action<DbDataReader> readAction = null);
 
-        Task Read(Func<Task<DbConnection>> openConnection,
+        Task Read(
+            Func<Task<DbConnection>> openConnection,
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,

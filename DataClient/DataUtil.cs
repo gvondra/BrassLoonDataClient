@@ -15,7 +15,8 @@ namespace BrassLoon.DataClient
         {
             IDataParameter parameter = providerFactory.CreateParameter();
             parameter.DbType = type;
-            if (!string.IsNullOrEmpty(name)) { parameter.ParameterName = name; }
+            if (!string.IsNullOrEmpty(name))
+                parameter.ParameterName = name;
             return parameter;
         }
 
@@ -23,8 +24,7 @@ namespace BrassLoon.DataClient
             IDbProviderFactory providerFactory,
             string name,
             DbType dbType,
-            object value
-        )
+            object value)
         {
             IDataParameter parameter = CreateParameter(providerFactory, name, dbType);
             parameter.Value = value;
@@ -185,8 +185,7 @@ namespace BrassLoon.DataClient
             IDbProviderFactory providerFactory,
             ISettings settings,
             string storedProcedureName,
-            params IDataParameter[] dataParameters
-            )
+            params IDataParameter[] dataParameters)
         {
             List<T> items = new List<T>();
             using (DbConnection connection = await providerFactory.OpenConnection(settings))

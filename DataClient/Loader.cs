@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,18 +9,12 @@ namespace BrassLoon.DataClient
 {
     public class Loader : ILoader
     {
-        private static readonly Dictionary<Type, List<ColumnMapping>> _columnMappings;
-        private static readonly AutoResetEvent _mappingsLock;
-
-        static Loader()
-        {
-            _mappingsLock = new AutoResetEvent(true);
-            _columnMappings = new Dictionary<Type, List<ColumnMapping>>();
-        }
+        private static readonly Dictionary<Type, List<ColumnMapping>> _columnMappings = new Dictionary<Type, List<ColumnMapping>>();
+        private static readonly AutoResetEvent _mappingsLock = new AutoResetEvent(true);
 
         public List<ILoaderComponent> Components { get; set; }
 
-        /// data is the model that values will be assigned to
+        // data is the model that values will be assigned to
         public async Task<object> Load(object data, DbDataReader reader)
         {
             IEnumerable<ColumnMapping> columnMappings = Loader.GetColumnMappings(data);
@@ -31,7 +23,8 @@ namespace BrassLoon.DataClient
             foreach (ColumnMapping columnMapping in columnMappings)
             {
                 string columnName = columnMapping.GetColumnName();
-                ordinal = fields.ContainsKey(columnName) ? fields[columnName] : -1;
+                if (!fields.TryGetValue(columnName, out ordinal))
+                    ordinal = -1;
                 if (!columnMapping.IsOptional && ordinal < 0)
                     throw new SourceColumnNotFound(columnName);
                 if (ordinal >= 0)
@@ -40,34 +33,6 @@ namespace BrassLoon.DataClient
                 }
             }
             return data;
-        }
-
-        private static Dictionary<string, int> GetFields(IDataReader reader)
-        {
-            Dictionary<string, int> fields = new Dictionary<string, int>();
-            for (int i = 0; i < reader.FieldCount; i += 1)
-            {
-                fields.Add(reader.GetName(i), i);
-            }
-            return fields;
-        }
-
-        private async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
-        {
-            bool found = false;
-            object value = null;
-            if (Components != null)
-            {
-                ILoaderComponent loaderComponent = Components.FirstOrDefault(c => c.IsApplicable(columnMapping));
-                if (loaderComponent != null)
-                {
-                    value = await loaderComponent.GetValue(reader, ordinal, columnMapping);
-                    found = true;
-                }
-            }
-            if (!found)
-                throw new LoaderComponentNotFound(columnMapping);
-            return value;
         }
 
         private static List<ColumnMapping> GetColumnMappings(object data)
@@ -107,6 +72,34 @@ namespace BrassLoon.DataClient
                 }
             }
             return mappings;
+        }
+
+        private static Dictionary<string, int> GetFields(DbDataReader reader)
+        {
+            Dictionary<string, int> fields = new Dictionary<string, int>();
+            for (int i = 0; i < reader.FieldCount; i += 1)
+            {
+                fields.Add(reader.GetName(i), i);
+            }
+            return fields;
+        }
+
+        private async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
+        {
+            bool found = false;
+            object value = null;
+            if (Components != null)
+            {
+                ILoaderComponent loaderComponent = Components.Find(c => c.IsApplicable(columnMapping));
+                if (loaderComponent != null)
+                {
+                    value = await loaderComponent.GetValue(reader, ordinal, columnMapping);
+                    found = true;
+                }
+            }
+            if (!found)
+                throw new LoaderComponentNotFound(columnMapping);
+            return value;
         }
     }
 }

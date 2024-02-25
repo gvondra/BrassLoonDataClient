@@ -6,7 +6,8 @@ namespace BrassLoon.DataClient
 
         public void AcceptChanges()
         {
-            if (Manager != null) { Manager.Original = Clone(); }
+            if (Manager != null)
+                Manager.Original = Clone();
         }
 
         public void AfterCommit() => AcceptChanges();

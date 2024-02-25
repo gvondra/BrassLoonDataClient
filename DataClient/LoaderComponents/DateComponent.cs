@@ -7,7 +7,7 @@ namespace BrassLoon.DataClient.LoaderComponents
     {
         public async Task<object> GetValue(DbDataReader reader, int ordinal, ColumnMapping columnMapping)
         {
-            DateTime? result = await base.GetFieldValue(reader, ordinal);
+            DateTime? result = await GetFieldValue(reader, ordinal);
             if (columnMapping.MappingAttribute.IsUtc && result.HasValue)
                 result = DateTime.SpecifyKind(result.Value, DateTimeKind.Utc);
             return result;

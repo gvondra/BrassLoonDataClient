@@ -15,6 +15,37 @@ namespace BrassLoon.DataClient
 
         public object Original { get; set; }
 
+        public static bool IsByteArrayChanged(byte[] originalValue, byte[] targetValue)
+        {
+            bool changed = false;
+            int i;
+            if (originalValue != null && originalValue != targetValue)
+            {
+                if (originalValue.Length != targetValue.Length)
+                {
+                    changed = true;
+                }
+                else
+                {
+                    i = 0;
+                    while (!changed && i < originalValue.Length)
+                    {
+                        if (originalValue[i] != targetValue[i])
+                            changed = true;
+                        i += 1;
+                    }
+                }
+            }
+            return changed;
+        }
+
+        public static IEnumerable<PropertyInfo> GetProperties(Type type)
+        {
+            return type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(p => p.CanRead && p.GetCustomAttributes<ColumnMappingAttribute>(true).Any())
+                ;
+        }
+
         public DataState GetState(object target)
         {
             DataState result = DataState.Unchanged;
@@ -22,10 +53,10 @@ namespace BrassLoon.DataClient
             {
                 result = DataState.New;
             }
-            else if (target != null && target != Original)
+            else if (target != null && target != Original
+                && DataStateManager.GetProperties(target.GetType()).Any((PropertyInfo p) => IsChanged(p, target)))
             {
-                if (DataStateManager.GetProperties(target.GetType()).Any((PropertyInfo p) => IsChanged(p, target)))
-                    result = DataState.Updated;
+                result = DataState.Updated;
             }
             return result;
         }
@@ -69,8 +100,7 @@ namespace BrassLoon.DataClient
         {
             bool changed = false;
             PropertyInfo hasValue = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where((PropertyInfo p) => p.CanRead && p.Name == "HasValue" && p.PropertyType.Equals(typeof(bool)))
-                .First()
+                .First((PropertyInfo p) => p.CanRead && p.Name == "HasValue" && p.PropertyType.Equals(typeof(bool)))
                 ;
             bool originalHasValue = (bool)hasValue.GetValue(originalValue);
             bool targetHasValue = (bool)hasValue.GetValue(targetValue);
@@ -79,43 +109,11 @@ namespace BrassLoon.DataClient
             if (!changed && originalHasValue == targetHasValue && originalHasValue)
             {
                 PropertyInfo valueInfo = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                    .Where((PropertyInfo p) => p.CanRead && p.Name == "Value")
-                    .First()
+                    .First((PropertyInfo p) => p.CanRead && p.Name == "Value")
                     ;
                 changed = IsChanged(valueInfo, originalValue, targetValue);
             }
             return changed;
-        }
-
-        public static bool IsByteArrayChanged(byte[] originalValue, byte[] targetValue)
-        {
-            bool changed = false;
-            int i;
-            if (originalValue != null && originalValue != targetValue)
-            {
-                if (originalValue.Length != targetValue.Length)
-                {
-                    changed = true;
-                }
-                else
-                {
-                    i = 0;
-                    while (!changed && i < originalValue.Length)
-                    {
-                        if (originalValue[i] != targetValue[i])
-                            changed = true;
-                        i += 1;
-                    }
-                }
-            }
-            return changed;
-        }
-
-        public static IEnumerable<PropertyInfo> GetProperties(Type type)
-        {
-            return type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.CanRead && p.GetCustomAttributes<ColumnMappingAttribute>(true).Any())
-                ;
         }
     }
 }

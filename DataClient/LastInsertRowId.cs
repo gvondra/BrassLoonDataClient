@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 
 namespace BrassLoon.DataClient
 {
+#pragma warning disable S1118 // Utility classes should not have public constructors
     public class LastInsertRowId
     {
-        public static async Task<T> GetLastInsertRowId<T>(DbConnection connection) where T : struct
+        public static async Task<T> GetLastInsertRowId<T>(DbConnection connection)
+            where T : struct
         {
             using (DbCommand command = connection.CreateCommand())
             {
@@ -16,4 +18,5 @@ namespace BrassLoon.DataClient
             }
         }
     }
+#pragma warning restore S1118 // Utility classes should not have public constructors
 }
