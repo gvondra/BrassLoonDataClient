@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<AssemblyName>BrassLoon.DataClient.MongoDB</AssemblyName>
+		<RootNameSpace>BrassLoon.DataClient.MongoDB</RootNameSpace>
+		<Authors>Greg Vondra</Authors>
+		<Company />
+		<Product>Brass Loon</Product>
+		<Description>MongoDB Interface Wrapper</Description>
+		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+		<Version>1.0.0-prerelease.2</Version>
+		<AssemblyVersion>1.0.0.2</AssemblyVersion>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MongoDB.Driver" Version="[2.24.0,3.0)" />
+	</ItemGroup>
+
+</Project>
