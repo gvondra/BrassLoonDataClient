@@ -11,8 +11,8 @@
 		<Product>Brass Loon</Product>
 		<Description>MongoDB Interface Wrapper</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>1.0.0-prerelease.2</Version>
-		<AssemblyVersion>1.0.0.2</AssemblyVersion>
+		<Version>1.0.0-prerelease.3</Version>
+		<AssemblyVersion>1.0.0.3</AssemblyVersion>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
@@ -26,6 +26,10 @@
 		<DebugType>full</DebugType>
 		<Optimize>False</Optimize>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="DataClient.MongoDBTest"/>
+	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="MongoDB.Driver" Version="[2.24.0,3.0)" />
