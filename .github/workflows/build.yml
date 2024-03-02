@@ -44,8 +44,9 @@ jobs:
         shell: powershell
         run: |
           dotnet tool install --global dotnet-coverage
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"gvondra_BrassLoonDataClient" /o:"gvondra" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"gvondra_BrassLoonDataClient" /o:"gvondra" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.cs.vscoveragexml.reportsPaths=mongodb-coverage.xml
           dotnet build -c Debug .\DataClient\DataClient.csproj
           dotnet build -c Debug .\DataClientTest\DataClientTest.csproj
           dotnet-coverage collect "dotnet test .\DataClientTest\DataClientTest.csproj" -f xml -o "coverage.xml"
+          dotnet-coverage collect "dotnet test .\DataClient.MongoDBTest\DataClient.MongoDBTest.csproj" -f xml -o "mongodb-coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
