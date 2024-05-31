@@ -28,7 +28,11 @@ namespace BrassLoon.DataClient
             // first check the connection state.  If it's not open then dispose of it
             if (transactionHandler.Connection != null && transactionHandler.Connection.State != ConnectionState.Open)
             {
+#if NET6_0_OR_GREATER
+                await transactionHandler.Connection.DisposeAsync();
+#else
                 transactionHandler.Connection.Dispose();
+#endif
                 transactionHandler.Connection = null;
             }
             // second open a connection if no connection is already set
@@ -39,7 +43,12 @@ namespace BrassLoon.DataClient
             // third begin a transaction
             if (transactionHandler.Transaction == null)
             {
+#if NET6_0_OR_GREATER
+                transactionHandler.Transaction = new DbTransaction(
+                    await transactionHandler.Connection.BeginTransactionAsync());
+#else
                 transactionHandler.Transaction = new DbTransaction(transactionHandler.Connection.BeginTransaction());
+#endif
             }
             // fourth  add obserevers
             if (transactionHandler.Transaction != null && observers != null)

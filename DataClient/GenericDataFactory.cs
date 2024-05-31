@@ -93,10 +93,18 @@ namespace BrassLoon.DataClient
                     using (DbDataReader reader = await command.ExecuteReaderAsync())
                     {
                         result = await LoadData(reader, createModelObject);
+#if NET6_0_OR_GREATER
+                        await reader.CloseAsync();
+#else
                         reader.Close();
+#endif
                     }
                 }
+#if NET6_0_OR_GREATER
+                await connection.CloseAsync();
+#else
                 connection.Close();
+#endif
             }
             return result;
         }
