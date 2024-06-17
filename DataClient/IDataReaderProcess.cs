@@ -16,7 +16,15 @@ namespace BrassLoon.DataClient
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
-            Action<DbDataReader> readAction = null);
+            Func<DbDataReader, Task> readAction = null);
+
+        Task<T> Read<T>(
+            ISqlSettings settings,
+            ISqlDbProviderFactory providerFactory,
+            string commandText,
+            CommandType commandType = CommandType.Text,
+            IEnumerable<IDataParameter> parameters = null,
+            Func<DbDataReader, Task<T>> readAction = null);
 
         Task Read(
             ISettings settings,
@@ -24,13 +32,28 @@ namespace BrassLoon.DataClient
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
-            Action<DbDataReader> readAction = null);
+            Func<DbDataReader, Task> readAction = null);
+
+        Task<T> Read<T>(
+            ISettings settings,
+            IDbProviderFactory providerFactory,
+            string commandText,
+            CommandType commandType = CommandType.Text,
+            IEnumerable<IDataParameter> parameters = null,
+            Func<DbDataReader, Task<T>> readAction = null);
 
         Task Read(
             Func<Task<DbConnection>> openConnection,
             string commandText,
             CommandType commandType = CommandType.Text,
             IEnumerable<IDataParameter> parameters = null,
-            Action<DbDataReader> readAction = null);
+            Func<DbDataReader, Task> readAction = null);
+
+        Task<T> Read<T>(
+            Func<Task<DbConnection>> openConnection,
+            string commandText,
+            CommandType commandType = CommandType.Text,
+            IEnumerable<IDataParameter> parameters = null,
+            Func<DbDataReader, Task<T>> readAction = null);
     }
 }

@@ -10,9 +10,10 @@
 		<Product>Brass Loon</Product>
 		<Description>Generic DBMS Interface</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>3.6.0</Version>
-		<AssemblyVersion>3.6.0.0</AssemblyVersion>
+		<Version>3.7.0</Version>
+		<AssemblyVersion>3.7.0.0</AssemblyVersion>
 		<PackageReleaseNotes>
+			-3.7 Add DataReaderProcess overloads; Upgrade Azure.Identity
 			-3.6 Upgrade Azure.Identity
 			-3.5 Set min Microsoft.Data.SqlClient verstion to 5.1.4
 			-3.4 Upgrade package references
@@ -45,7 +46,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Azure.Identity" Version="[1.11.2,2.0)" />
+		<PackageReference Include="Azure.Identity" Version="[1.11.4,2.0)" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="[5.1.5,6)" />
 	</ItemGroup>
 </Project>
