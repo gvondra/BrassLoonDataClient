@@ -11,22 +11,6 @@ namespace BrassLoon.DataClient
         int? CommandTimeout { get; set; }
 
         Task Read(
-            ISqlSettings settings,
-            ISqlDbProviderFactory providerFactory,
-            string commandText,
-            CommandType commandType = CommandType.Text,
-            IEnumerable<IDataParameter> parameters = null,
-            Func<DbDataReader, Task> readAction = null);
-
-        Task<T> Read<T>(
-            ISqlSettings settings,
-            ISqlDbProviderFactory providerFactory,
-            string commandText,
-            CommandType commandType = CommandType.Text,
-            IEnumerable<IDataParameter> parameters = null,
-            Func<DbDataReader, Task<T>> readAction = null);
-
-        Task Read(
             ISettings settings,
             IDbProviderFactory providerFactory,
             string commandText,

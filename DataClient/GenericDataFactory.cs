@@ -21,41 +21,16 @@ namespace BrassLoon.DataClient
         public ILoaderFactory LoaderFactory { get; set; }
         public int? CommandTimeout { get; set; }
 
-        public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject)
-            => GetData(settings, providerFactory, commandText, createModelObject, null, CommandType.StoredProcedure);
+        public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, CommandType commandType = CommandType.StoredProcedure)
+            => GetData(settings, providerFactory, commandText, createModelObject, parameters: null, commandType: commandType);
 
-        public Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject)
-            => GetData(settings, providerFactory, commandText, createModelObject, null, CommandType.StoredProcedure);
-
-        public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, IEnumerable<IDataParameter> parameters)
-            => GetData(settings, providerFactory, commandText, createModelObject, parameters, CommandType.StoredProcedure);
-
-        public Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, IEnumerable<IDataParameter> parameters)
-            => GetData(settings, providerFactory, commandText, createModelObject, parameters, CommandType.StoredProcedure);
-
-        public Task<IEnumerable<T>> GetData(
+        public virtual Task<IEnumerable<T>> GetData(
             ISettings settings,
             IDbProviderFactory providerFactory,
             string commandText,
             Func<T> createModelObject,
             IEnumerable<IDataParameter> parameters,
-            CommandType commandType)
-        {
-            return GetData(
-                () => providerFactory.OpenConnection(settings),
-                commandText,
-                createModelObject,
-                parameters,
-                commandType);
-        }
-
-        public Task<IEnumerable<T>> GetData(
-            ISqlSettings settings,
-            ISqlDbProviderFactory providerFactory,
-            string commandText,
-            Func<T> createModelObject,
-            IEnumerable<IDataParameter> parameters,
-            CommandType commandType)
+            CommandType commandType = CommandType.StoredProcedure)
         {
             return GetData(
                 () => providerFactory.OpenConnection(settings),
@@ -109,27 +84,10 @@ namespace BrassLoon.DataClient
             return result;
         }
 
-        public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager)
-            => GetData(settings, providerFactory, commandText, createModelObject, assignDataStateManager, null, CommandType.StoredProcedure);
+        public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, CommandType commandType = CommandType.StoredProcedure)
+            => GetData(settings, providerFactory, commandText, createModelObject, assignDataStateManager, null, commandType);
 
-        public Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager)
-            => GetData(settings, providerFactory, commandText, createModelObject, assignDataStateManager, null, CommandType.StoredProcedure);
-
-        public Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters)
-            => GetData(settings, providerFactory, commandText, createModelObject, assignDataStateManager, parameters, CommandType.StoredProcedure);
-
-        public Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters)
-            => GetData(settings, providerFactory, commandText, createModelObject, assignDataStateManager, parameters, CommandType.StoredProcedure);
-
-        public async Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters, CommandType commandType)
-        {
-            IEnumerable<T> data = await GetData(settings, providerFactory, commandText, createModelObject, parameters, commandType);
-            if (assignDataStateManager != null)
-                assignDataStateManager(data);
-            return data;
-        }
-
-        public async Task<IEnumerable<T>> GetData(ISqlSettings settings, ISqlDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters, CommandType commandType)
+        public async Task<IEnumerable<T>> GetData(ISettings settings, IDbProviderFactory providerFactory, string commandText, Func<T> createModelObject, Action<IEnumerable<T>> assignDataStateManager, IEnumerable<IDataParameter> parameters, CommandType commandType = CommandType.StoredProcedure)
         {
             IEnumerable<T> data = await GetData(settings, providerFactory, commandText, createModelObject, parameters, commandType);
             if (assignDataStateManager != null)

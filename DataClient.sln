@@ -16,6 +16,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataClient.MongoDB", "DataC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataClient.MongoDBTest", "DataClient.MongoDBTest\DataClient.MongoDBTest.csproj", "{5AF76A18-CEEB-46A9-85AC-194AC4ED2A37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataClient.SqlClient", "DataClient.SqlClient\DataClient.SqlClient.csproj", "{86439B90-CBE6-4416-960E-9839593164A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataClient.MySql", "DataClient.MySql\DataClient.MySql.csproj", "{BA0637ED-24E0-4C6D-8487-9EB9E97EBEE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{5AF76A18-CEEB-46A9-85AC-194AC4ED2A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AF76A18-CEEB-46A9-85AC-194AC4ED2A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AF76A18-CEEB-46A9-85AC-194AC4ED2A37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86439B90-CBE6-4416-960E-9839593164A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86439B90-CBE6-4416-960E-9839593164A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86439B90-CBE6-4416-960E-9839593164A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86439B90-CBE6-4416-960E-9839593164A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA0637ED-24E0-4C6D-8487-9EB9E97EBEE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA0637ED-24E0-4C6D-8487-9EB9E97EBEE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA0637ED-24E0-4C6D-8487-9EB9E97EBEE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA0637ED-24E0-4C6D-8487-9EB9E97EBEE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

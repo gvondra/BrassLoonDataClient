@@ -4,26 +4,21 @@ using System.Threading.Tasks;
 
 namespace BrassLoon.DataClient
 {
-    public class DbProviderFactory : IDbProviderFactory
+    public abstract class DbProviderFactory : IDbProviderFactory
     {
-        public DbProviderFactory()
-        {
-            InnerFactory = Microsoft.Data.SqlClient.SqlClientFactory.Instance;
-        }
-
-        public DbProviderFactory(System.Data.Common.DbProviderFactory providerFactory)
+        protected DbProviderFactory(System.Data.Common.DbProviderFactory providerFactory)
         {
             InnerFactory = providerFactory;
         }
 
         protected System.Data.Common.DbProviderFactory InnerFactory { get; set; }
 
-        public DbConnection CreateConnection() => InnerFactory.CreateConnection();
-        public IDataParameter CreateParameter() => InnerFactory.CreateParameter();
+        public virtual DbConnection CreateConnection() => InnerFactory.CreateConnection();
+        public virtual IDataParameter CreateParameter() => InnerFactory.CreateParameter();
 
-        public async Task EstablishTransaction(ITransactionHandler transactionHandler) => await EstablishTransaction(transactionHandler, null);
+        public virtual async Task EstablishTransaction(ITransactionHandler transactionHandler) => await EstablishTransaction(transactionHandler, null);
 
-        public async Task EstablishTransaction(ITransactionHandler transactionHandler, params IDbTransactionObserver[] observers)
+        public virtual async Task EstablishTransaction(ITransactionHandler transactionHandler, params IDbTransactionObserver[] observers)
         {
             // first check the connection state.  If it's not open then dispose of it
             if (transactionHandler.Connection != null && transactionHandler.Connection.State != ConnectionState.Open)

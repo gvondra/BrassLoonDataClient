@@ -2,7 +2,7 @@
 using Azure.Identity;
 using System.Threading.Tasks;
 
-namespace BrassLoon.DataClient
+namespace BrassLoon.DataClient.SqlClient
 {
     public static class AzureTokenProvider
     {
