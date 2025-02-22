@@ -26,7 +26,7 @@ namespace BrassLoon.DataClient
                 if (!fields.TryGetValue(columnName, out ordinal))
                     ordinal = -1;
                 if (!columnMapping.IsOptional && ordinal < 0)
-                    throw new SourceColumnNotFound(columnName);
+                    throw new SourceColumnNotFoundException(columnName);
                 if (ordinal >= 0)
                 {
                     columnMapping.SetValue(data, await GetValue(reader, ordinal, columnMapping));
@@ -98,7 +98,7 @@ namespace BrassLoon.DataClient
                 }
             }
             if (!found)
-                throw new LoaderComponentNotFound(columnMapping);
+                throw new LoaderComponentNotFoundException(columnMapping);
             return value;
         }
     }

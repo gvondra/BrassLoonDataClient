@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BrassLoon.DataClient.MongoDB
@@ -40,10 +41,9 @@ namespace BrassLoon.DataClient.MongoDB
             ClientCacheItem clientCacheItem;
             lock (_clients)
             {
-                foreach (string existingKey in _clients.Keys)
+                foreach (string existingKey in _clients.Keys.Where(k => _clients[k].IsExpired()))
                 {
-                    if (_clients[existingKey].IsExpired())
-                        _clients.TryRemove(existingKey, out ClientCacheItem _);
+                    _clients.TryRemove(existingKey, out ClientCacheItem _);
                 }
                 if (!_clients.TryGetValue(key, out clientCacheItem) || clientCacheItem.IsExpired())
                 {

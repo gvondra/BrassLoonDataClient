@@ -9,7 +9,7 @@ namespace BrassLoon.DataClient.LoaderComponents
         public virtual bool IsApplicable(ColumnMapping mapping)
             => mapping.Info.PropertyType.Equals(typeof(T)) || mapping.Info.PropertyType.Equals(typeof(T?));
 
-        protected async Task<T?> GetFieldValue(DbDataReader reader, int ordinal)
+        protected static async Task<T?> GetFieldValue(DbDataReader reader, int ordinal)
         {
             T? result = null;
             if (!await reader.IsDBNullAsync(ordinal))

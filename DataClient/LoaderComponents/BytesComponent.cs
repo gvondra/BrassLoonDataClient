@@ -1,5 +1,6 @@
 using System.Data.Common;
 using System.Threading.Tasks;
+
 namespace BrassLoon.DataClient.LoaderComponents
 {
     public class BytesComponent : ILoaderComponent

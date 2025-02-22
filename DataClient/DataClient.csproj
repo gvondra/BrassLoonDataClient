@@ -10,9 +10,10 @@
 		<Product>Brass Loon</Product>
 		<Description>Generic DBMS Interface</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>3.8.0</Version>
-		<AssemblyVersion>3.8.0.0</AssemblyVersion>
+		<Version>4.0.0-alpha.1</Version>
+		<AssemblyVersion>4.0.0.1</AssemblyVersion>
 		<PackageReleaseNotes>
+			-4.0 Add MySql support; Move SQL Server support to separate package; Renamed exception classes
 			-3.8 Set min Microsoft.Data.SqlClient verstion to 5.2.2
 			-3.7 Add DataReaderProcess overloads; Upgrade Azure.Identity
 			-3.6 Upgrade Azure.Identity

@@ -11,8 +11,8 @@
 		<Product>Brass Loon</Product>
 		<Description>MongoDB Interface Wrapper</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>1.0.0-prerelease.4</Version>
-		<AssemblyVersion>1.0.0.4</AssemblyVersion>
+		<Version>4.0.0-prerelease.1</Version>
+		<AssemblyVersion>4.0.0.1</AssemblyVersion>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
