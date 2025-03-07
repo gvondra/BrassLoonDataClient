@@ -33,7 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="BrassLoon.DataClient" Version="4.0.0-alpha.*" />
+		<PackageReference Include="BrassLoon.DataClient" Version="4.0.0-prerelease.*" />
 	</ItemGroup>
 	
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">

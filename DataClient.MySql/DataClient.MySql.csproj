@@ -11,8 +11,8 @@
 		<Product>Brass Loon</Product>
 		<Description>My SQL Support</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>4.0.0-prerelease.1</Version>
-		<AssemblyVersion>4.0.0.1</AssemblyVersion>
+		<Version>4.0.0-prerelease.3</Version>
+		<AssemblyVersion>4.0.0.3</AssemblyVersion>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
@@ -32,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="BrassLoon.DataClient" Version="4.0.0-alpha.*" />
+		<PackageReference Include="BrassLoon.DataClient" Version="4.0.0-prerelease.*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
