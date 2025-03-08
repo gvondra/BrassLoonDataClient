@@ -156,6 +156,14 @@ namespace BrassLoon.DataClient
             }
         }
 
+        public static object GetParameterValueBinary(Guid? value)
+        {
+            if (value.HasValue && !value.Value.Equals(Guid.Empty))
+                return value.Value.ToByteArray();
+            else
+                return DBNull.Value;
+        }
+
         public static void AddParameter(
             IDbProviderFactory providerFactory,
             IList parameterCollection,
@@ -171,6 +179,12 @@ namespace BrassLoon.DataClient
                 state.Manager = new DataStateManager(state.Clone());
             }
         }
+
+        public static string[] GetColumns<T>()
+            => ColumnLister.Instance.GetColumns<T>();
+
+        public static string[] GetColumns(Type modelType)
+            => ColumnLister.Instance.GetColumns(modelType);
 
         /// <summary>
         /// Executes the named stored proc. The resultant data set is read, and the first field stored to list.

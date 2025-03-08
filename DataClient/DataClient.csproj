@@ -10,8 +10,8 @@
 		<Product>Brass Loon</Product>
 		<Description>Generic DBMS Interface</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>4.0.0-prerelease.1</Version>
-		<AssemblyVersion>4.0.0.1</AssemblyVersion>
+		<Version>4.0.0-prerelease.3</Version>
+		<AssemblyVersion>4.0.0.3</AssemblyVersion>
 		<PackageReleaseNotes>
 			-4.0 Add MySql support; Move SQL Server support to separate package; Renamed exception classes
 			-3.8 Set min Microsoft.Data.SqlClient verstion to 5.2.2
