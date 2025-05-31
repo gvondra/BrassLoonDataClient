@@ -109,7 +109,7 @@ namespace DataClientTest
             Assert.IsTrue(DataStateManager.IsByteArrayChanged(array1, array2));
         }
 
-        private class TestModel : ICloneable
+        private sealed class TestModel : ICloneable
         {
             [ColumnMapping("Name")] public string Name { get; set; }
             [ColumnMapping("Data")] public byte[] Data { get; set; }
