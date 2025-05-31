@@ -11,8 +11,8 @@
 		<Product>Brass Loon</Product>
 		<Description>My SQL Support</Description>
 		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-		<Version>4.0.0-prerelease.3</Version>
-		<AssemblyVersion>4.0.0.3</AssemblyVersion>
+		<Version>4.0.0-prerelease.4</Version>
+		<AssemblyVersion>4.0.0.4</AssemblyVersion>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
@@ -28,7 +28,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MySql.Data" Version="9.2.0" />
+	  <PackageReference Include="MySql.Data" Version="9.3.*" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
