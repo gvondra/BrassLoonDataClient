@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace BrassLoon.DataClient
 {
-    internal class ColumnLister
+    internal sealed class ColumnLister
     {
         private readonly Dictionary<string, string[]> _columns = new Dictionary<string, string[]>();
 
