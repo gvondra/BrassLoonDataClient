@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Data;
-using System.Data.Common;
 
 namespace DataClientTest
 {
@@ -20,7 +19,7 @@ namespace DataClientTest
             LoaderFactory loaderFactory = new LoaderFactory();
             ILoader loader = loaderFactory.CreateLoader();
             Assert.IsInstanceOfType(loader, typeof(Loader));
-            using (DbDataReader reader = CreateReader())
+            using (DataTableReader reader = CreateReader())
             {
                 Assert.IsTrue(reader.Read());
                 loader.Load(model, reader);
@@ -32,7 +31,7 @@ namespace DataClientTest
             Assert.AreEqual(1.01, model.Value);
         }
 
-        private DbDataReader CreateReader()
+        private DataTableReader CreateReader()
         {
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("Id", typeof(int));
@@ -45,7 +44,7 @@ namespace DataClientTest
             return dataTable.CreateDataReader();
         }
 
-        private class TestModel
+        private sealed class TestModel
         {
             [ColumnMapping("Id")] public int Id { get; set; }
             [ColumnMapping] public string Name { get; set; }

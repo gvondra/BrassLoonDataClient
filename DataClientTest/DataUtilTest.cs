@@ -46,13 +46,13 @@ namespace DataClientTest
         }
 
         [TestMethod]
-        public void GetParameterValueGuidZeroTest() => Assert.IsTrue(DataUtil.GetParameterValue(Guid.Empty) == DBNull.Value);
+        public void GetParameterValueGuidZeroTest() => Assert.AreEqual(DataUtil.GetParameterValue(Guid.Empty), DBNull.Value);
 
         [TestMethod]
         public void GetParameterValueGuidNullTest()
         {
             Guid? testGuid = null;
-            Assert.IsTrue(DataUtil.GetParameterValue(testGuid) == DBNull.Value);
+            Assert.AreEqual(DataUtil.GetParameterValue(testGuid), DBNull.Value);
         }
 
         [TestMethod]

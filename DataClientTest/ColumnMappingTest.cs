@@ -18,7 +18,7 @@ namespace DataClientTest
             Assert.AreEqual(name, model.Name);
         }
 
-        private class ModelTest
+        private sealed class ModelTest
         {
             public string Name { get; set; }
         }
